@@ -1,0 +1,2 @@
+imports:
+  - { resource: '%kernel.project_dir%/services.yaml' }

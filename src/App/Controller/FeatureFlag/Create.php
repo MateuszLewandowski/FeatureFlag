@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller\FeatureFlag;
+
+use App\Core\Validation\ResponseCodeValidator;
+use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
+use FeatureFlag\Access\Application\FeatureFlagRepository;
+use FeatureFlag\Access\Domain\FeatureFlag;
+use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
+use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Annotation\Route;
+use Throwable;
+
+#[AsController]
+#[Route('/api/v1')]
+final class Create extends AbstractController
+{
+    public function __construct(
+        private readonly FeatureFlagRepository $repository,
+        private readonly LoggerInterface $logger,
+    ) {}
+
+    #[Route(path: '/feature-flag', methods: 'POST', priority: 100)]
+    public function __invoke(Request $request): Response
+    {
+        try {
+            $featureFlag = new FeatureFlag(
+                new FeatureFlagId($request->request->getString('featureFlagId')),
+                FeatureFlagConfig::createWithRequest($request)
+            );
+            $this->repository->set($featureFlag)->save();
+            $responseStatus = Response::HTTP_CREATED;
+        } catch (Throwable $e) {
+            $this->logger->error($e->getMessage(), [
+                'request' => $request,
+                'exception' => $e,
+            ]);
+            $responseStatus = ResponseCodeValidator::check($e->getCode());
+            $responseContent = new ExceptionResponseDTO($e->getMessage());
+        } finally {
+            return new Response(json_encode($responseContent ?? ''), $responseStatus);
+        }
+    }
+}
