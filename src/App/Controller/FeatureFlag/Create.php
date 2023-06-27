@@ -31,19 +31,18 @@ final class Create extends AbstractController
     public function __invoke(Request $request): Response
     {
         try {
-            $featureFlag = new FeatureFlag(
+            $responseStatus = Response::HTTP_CREATED;
+            $this->repository->set(new FeatureFlag(
                 new FeatureFlagId($request->request->getString('featureFlagId')),
                 FeatureFlagConfig::createWithRequest($request)
-            );
-            $this->repository->set($featureFlag)->save();
-            $responseStatus = Response::HTTP_CREATED;
+            ))->save();
         } catch (Throwable $e) {
+            $responseStatus = ResponseCodeValidator::check($e->getCode());
+            $responseContent = new ExceptionResponseDTO($e->getMessage());
             $this->logger->error($e->getMessage(), [
                 'request' => $request,
                 'exception' => $e,
             ]);
-            $responseStatus = ResponseCodeValidator::check($e->getCode());
-            $responseContent = new ExceptionResponseDTO($e->getMessage());
         } finally {
             return new Response(json_encode($responseContent ?? ''), $responseStatus);
         }

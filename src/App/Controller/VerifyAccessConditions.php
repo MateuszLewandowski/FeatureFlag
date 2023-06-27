@@ -33,21 +33,20 @@ final class VerifyAccessConditions extends AbstractController
         try {
             $featureFlagId = new FeatureFlagId($request->get('featureFlagId'));
             $user = User::createWithRequest($request);
-
+            
             $isAvailable = $this->verifier->verify($featureFlagId, $user);
-
+            
             $responseStatus = $isAvailable
                 ? Response::HTTP_OK
                 : Response::HTTP_FORBIDDEN;
             $responseContent = new VerifierResultDTO($isAvailable);
         } catch (Throwable $e) {
+            $responseStatus = ResponseCodeValidator::check($e->getCode());
+            $responseContent = new ExceptionResponseDTO($e->getMessage());
             $this->logger->error($e->getMessage(), [
                 'request' => $request,
                 'exception' => $e,
             ]);
-
-            $responseStatus = ResponseCodeValidator::check($e->getCode());
-            $responseContent = new ExceptionResponseDTO($e->getMessage());
         } finally {
             return new Response(json_encode($responseContent), $responseStatus);
         }

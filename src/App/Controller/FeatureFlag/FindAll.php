@@ -38,12 +38,12 @@ final class FindAll extends AbstractController
                 : Response::HTTP_NOT_FOUND;
             $responseContent = $featureFlagsDTO;
         } catch (Throwable $e) {
+            $responseStatus = ResponseCodeValidator::check($e->getCode());
+            $responseContent = new ExceptionResponseDTO($e->getMessage());
             $this->logger->error($e->getMessage(), [
                 'request' => $request,
                 'exception' => $e,
             ]);
-            $responseStatus = ResponseCodeValidator::check($e->getCode());
-            $responseContent = new ExceptionResponseDTO($e->getMessage());
         } finally {
             return new Response(json_encode($responseContent), $responseStatus);
         }

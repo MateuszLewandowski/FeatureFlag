@@ -29,16 +29,17 @@ final class Delete extends AbstractController
     public function __invoke(Request $request): Response
     {
         try {
-            $featureFlagId = new FeatureFlagId($request->request->getString('featureFlagId'));
-            $this->repository->delete($featureFlagId);
             $responseStatus = Response::HTTP_NO_CONTENT;
+            $this->repository->delete(
+                new FeatureFlagId($request->request->getString('featureFlagId'))
+            );
         } catch (Throwable $e) {
+            $responseStatus = ResponseCodeValidator::check($e->getCode());
+            $responseContent = new ExceptionResponseDTO($e->getMessage());
             $this->logger->error($e->getMessage(), [
                 'request' => $request,
                 'exception' => $e,
             ]);
-            $responseStatus = ResponseCodeValidator::check($e->getCode());
-            $responseContent = new ExceptionResponseDTO($e->getMessage());
         } finally {
             return new Response(json_encode($responseContent ?? ''), $responseStatus);
         }

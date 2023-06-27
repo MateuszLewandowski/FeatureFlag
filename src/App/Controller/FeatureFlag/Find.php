@@ -30,16 +30,17 @@ final class Find extends AbstractController
     public function __invoke(Request $request): Response
     {
         try {
-            $featureFlag = $this->repository->get(new FeatureFlagId($request->get('FeatureFlagId')));
             $responseStatus = Response::HTTP_OK;
-            $responseContent = FeatureFlagDTOFactory::create($featureFlag);
+            $responseContent = FeatureFlagDTOFactory::create(
+                $this->repository->get(new FeatureFlagId($request->get('FeatureFlagId')))
+            );
         } catch (Throwable $e) {
+            $responseStatus = ResponseCodeValidator::check($e->getCode());
+            $responseContent = new ExceptionResponseDTO($e->getMessage());
             $this->logger->error($e->getMessage(), [
                 'request' => $request,
                 'exception' => $e,
             ]);
-            $responseStatus = ResponseCodeValidator::check($e->getCode());
-            $responseContent = new ExceptionResponseDTO($e->getMessage());
         } finally {
             return new Response(json_encode($responseContent), $responseStatus);
         }
