@@ -93,7 +93,7 @@ final class FeatureFlagConfigBuilderTest extends TestCase
     {
         $config = FeatureFlagConfigBuilder::create()->setForceGrantAccess(null)->build();
 
-        $this->assertNull($config->forceGrantAccess);
+        $this->assertFalse($config->forceGrantAccess);
     }
 
     public function testSkipDateThresholdIfOneIngredientIsMissing(): void

@@ -8,17 +8,13 @@ use Shared\ValueObject;
 
 abstract class ValueObjectCollection
 {
-    protected function __construct(string $type, protected ?array $collection)
+    protected function __construct(protected readonly array $collection) {}
+
+    protected static function mapFromPrimitives(string $type, array $valueObjects): array
     {
-        if (null === $this->collection) {
-            $this->collection = [];
-        }
-
-        foreach ($this->collection as &$item) {
-            $item = new $type($item);
-        }
+        return array_map(fn (mixed $item) => new $type($item), $valueObjects);
     }
-
+    
     public function toArray(): array
     {
         return array_map(static function ($item) {

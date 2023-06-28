@@ -23,7 +23,7 @@ final class ValueObjectCollectionTest extends TestCase
 {
     public function testCreateEmptyCollection(): void
     {
-        $emptyCollection = new UserIdCollection(null);
+        $emptyCollection = new UserIdCollection([]);
 
         $this->assertEmpty($emptyCollection->toArray());
     }

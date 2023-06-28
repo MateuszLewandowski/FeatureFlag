@@ -8,6 +8,5 @@ final class ExceptionResponseDTO
 {
     public function __construct(
         public readonly string $error,
-        public readonly bool $isAvailable = false,
     ) {}
 }

@@ -12,4 +12,7 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
+/coverage
+/phpunit.result.cache
+/.phpunit.cache
 ###< phpunit/phpunit ###

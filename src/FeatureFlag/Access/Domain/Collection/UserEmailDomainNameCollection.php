@@ -8,8 +8,8 @@ use FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName;
 
 final class UserEmailDomainNameCollection extends ValueObjectCollection
 {
-    public function __construct(?array $userEmailDomainNames = [])
+    public function __construct(array $userEmailDomainNames)
     {
-        parent::__construct(UserEmailDomainName::class, $userEmailDomainNames);
+        parent::__construct(self::mapFromPrimitives(UserEmailDomainName::class, $userEmailDomainNames));
     }
 }

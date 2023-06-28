@@ -18,6 +18,5 @@ final class ExceptionResponseDtoTest extends TestCase
         $dto = new ExceptionResponseDTO($message);
 
         $this->assertSame($message, $dto->error);
-        $this->assertFalse($dto->isAvailable);
     }
 }

@@ -8,8 +8,8 @@ use FeatureFlag\Access\Domain\ValueObject\UserId;
 
 final class UserIdCollection extends ValueObjectCollection
 {
-    public function __construct(?array $userIds = [])
+    public function __construct(array $userIds)
     {
-        parent::__construct(UserId::class, $userIds);
+        parent::__construct(self::mapFromPrimitives(UserId::class, $userIds));
     }
 }

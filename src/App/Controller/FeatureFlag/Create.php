@@ -43,8 +43,8 @@ final class Create extends AbstractController
                 'request' => $request,
                 'exception' => $e,
             ]);
-        } finally {
-            return new Response(json_encode($responseContent ?? ''), $responseStatus);
         }
+         
+        return new Response(json_encode($responseContent ?? ''), $responseStatus);
     }
 }
