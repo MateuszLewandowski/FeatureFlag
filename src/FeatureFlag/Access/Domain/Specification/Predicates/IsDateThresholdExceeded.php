@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Application\Specification\Predicates;
+namespace FeatureFlag\Access\Domain\Specification\Predicates;
 
 use DateTimeImmutable;
 use FeatureFlag\Access\Domain\FeatureFlag;

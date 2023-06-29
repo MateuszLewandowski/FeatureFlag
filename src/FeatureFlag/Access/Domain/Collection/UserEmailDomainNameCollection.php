@@ -10,6 +10,6 @@ final class UserEmailDomainNameCollection extends ValueObjectCollection
 {
     public function __construct(array $userEmailDomainNames)
     {
-        parent::__construct(self::mapFromPrimitives(UserEmailDomainName::class, $userEmailDomainNames));
+        parent::__construct(self::createFromPrimitives(UserEmailDomainName::class, $userEmailDomainNames));
     }
 }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Application\Specification;
 
-use FeatureFlag\Access\Application\Specification\Predicates\DoesUserEmailAddressIncludesDomain;
 use FeatureFlag\Access\Domain\Exception\InvalidUserEmailDomainNameException;
 use FeatureFlag\Access\Domain\Exception\InvalidUserEmailException;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;
+use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain;
 use FeatureFlag\Access\Domain\User;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use FeatureFlag\Access\Domain\ValueObject\UserEmail;

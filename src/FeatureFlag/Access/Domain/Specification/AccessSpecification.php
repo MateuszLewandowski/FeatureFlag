@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Application\Specification;
+namespace FeatureFlag\Access\Domain\Specification;
 
-use FeatureFlag\Access\Application\Specification\Predicates\Expressible;
+use FeatureFlag\Access\Domain\Specification\Predicates\Expressible;
 
 final class AccessSpecification
 {

@@ -33,10 +33,10 @@ final class FindAll extends AbstractController
             foreach ($this->repository->getFeatureFlags() as $featureFlag) {
                 $featureFlagsDTO[] = FeatureFlagDTOFactory::create($featureFlag);
             }
+            $responseContent = $featureFlagsDTO;
             $responseStatus = count($featureFlagsDTO)
                 ? Response::HTTP_OK
                 : Response::HTTP_NOT_FOUND;
-            $responseContent = $featureFlagsDTO;
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

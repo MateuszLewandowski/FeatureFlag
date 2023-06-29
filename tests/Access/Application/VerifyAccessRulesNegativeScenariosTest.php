@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers VerifyAccessRules
- * @covers \FeatureFlag\Access\Application\Exception\ExpressionNotFoundException
+ * @covers \FeatureFlag\Access\Domain\Exception\ExpressionNotFoundException
  */
 final class VerifyAccessRulesNegativeScenariosTest extends TestCase
 {

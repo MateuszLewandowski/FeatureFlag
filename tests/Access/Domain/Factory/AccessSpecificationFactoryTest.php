@@ -5,26 +5,26 @@ declare(strict_types=1);
 namespace App\Tests\Access\Domain\Factory;
 
 use DateTimeImmutable;
-use FeatureFlag\Access\Application\Specification\AccessSpecification;
-use FeatureFlag\Access\Application\Specification\Predicates\DoesUserEmailAddressIncludesDomain;
-use FeatureFlag\Access\Application\Specification\Predicates\DoesUserIdSatisfyModulo;
-use FeatureFlag\Access\Application\Specification\Predicates\IsDateThresholdExceeded;
-use FeatureFlag\Access\Application\Specification\Predicates\IsUserIdAvailable;
-use FeatureFlag\Access\Application\Specification\Predicates\IsUserRoleAvailable;
 use FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;
+use FeatureFlag\Access\Domain\Specification\AccessSpecification;
+use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain;
+use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo;
+use FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded;
+use FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable;
+use FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers AccessSpecificationFactory
- * @covers \FeatureFlag\Access\Application\Specification\AccessSpecification
- * @covers \FeatureFlag\Access\Application\Specification\Predicates\DoesUserEmailAddressIncludesDomain
- * @covers \FeatureFlag\Access\Application\Specification\Predicates\DoesUserIdSatisfyModulo
- * @covers \FeatureFlag\Access\Application\Specification\Predicates\IsDateThresholdExceeded
- * @covers \FeatureFlag\Access\Application\Specification\Predicates\IsUserRoleAvailable
- * @covers \FeatureFlag\Access\Application\Specification\Predicates\IsUserIdAvailable
+ * @covers \FeatureFlag\Access\Domain\Specification\AccessSpecification
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable
  */
 final class AccessSpecificationFactoryTest extends TestCase
 {

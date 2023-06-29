@@ -32,10 +32,12 @@ final class Create extends AbstractController
     {
         try {
             $responseStatus = Response::HTTP_CREATED;
-            $this->repository->set(new FeatureFlag(
-                new FeatureFlagId($request->request->getString('featureFlagId')),
-                FeatureFlagConfig::createWithRequest($request)
-            ))->save();
+            $this->repository->set(
+                new FeatureFlag(
+                    new FeatureFlagId($request->request->getString('featureFlagId')),
+                    FeatureFlagConfig::createWithRequest($request)
+                )
+            )->save();
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

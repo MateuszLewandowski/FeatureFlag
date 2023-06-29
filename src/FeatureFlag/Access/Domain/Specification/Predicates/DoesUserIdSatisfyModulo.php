@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Application\Specification\Predicates;
+namespace FeatureFlag\Access\Domain\Specification\Predicates;
 
 use FeatureFlag\Access\Domain\Exception\InvalidUserIdException;
 use FeatureFlag\Access\Domain\FeatureFlag;
 use FeatureFlag\Access\Domain\User;
 
-final class IsUserIdAvailable implements UserExtendedExpressible
+final class DoesUserIdSatisfyModulo implements UserExtendedExpressible
 {
     public function execute(FeatureFlag $featureFlag, User $user): bool
     {
@@ -16,6 +16,6 @@ final class IsUserIdAvailable implements UserExtendedExpressible
             throw new InvalidUserIdException();
         }
 
-        return $featureFlag->config->userIds->exists($user->id->value);
+        return 0 === $user->id->value % $featureFlag->config->moduloUserId->value;
     }
 }

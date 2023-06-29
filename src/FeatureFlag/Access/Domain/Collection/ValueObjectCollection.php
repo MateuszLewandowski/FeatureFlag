@@ -10,7 +10,7 @@ abstract class ValueObjectCollection
 {
     protected function __construct(protected readonly array $collection) {}
 
-    protected static function mapFromPrimitives(string $type, array $valueObjects): array
+    protected static function createFromPrimitives(string $type, array $valueObjects): array
     {
         return array_map(fn (mixed $item) => new $type($item), $valueObjects);
     }

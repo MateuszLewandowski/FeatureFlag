@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Application\Exception;
+namespace FeatureFlag\Access\Domain\Exception;
 
 use RuntimeException;
 

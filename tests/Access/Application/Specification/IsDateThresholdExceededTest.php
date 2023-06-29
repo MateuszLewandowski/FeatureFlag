@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Tests\Access\Application\Specification;
 
 use DateTimeImmutable;
-use FeatureFlag\Access\Application\Specification\Predicates\IsDateThresholdExceeded;
 use FeatureFlag\Access\Domain\Exception\InvalidDateThresholdTimeZoneException;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;
+use FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Application\Specification\Predicates\IsDateThresholdExceeded
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded
  * @covers InvalidDateThresholdTimeZoneException
  */
 final class IsDateThresholdExceededTest extends TestCase
