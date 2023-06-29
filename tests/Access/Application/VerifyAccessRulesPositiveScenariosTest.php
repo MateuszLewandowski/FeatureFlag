@@ -16,7 +16,7 @@ use FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers VerifyAccessRules
+ * @covers \FeatureFlag\Access\Application\VerifyAccessRules
  */
 final class VerifyAccessRulesPositiveScenariosTest extends TestCase
 {

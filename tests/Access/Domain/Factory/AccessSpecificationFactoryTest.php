@@ -18,7 +18,7 @@ use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers AccessSpecificationFactory
+ * @covers \FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory
  * @covers \FeatureFlag\Access\Domain\Specification\AccessSpecification
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo

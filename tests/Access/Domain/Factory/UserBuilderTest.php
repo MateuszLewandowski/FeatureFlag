@@ -8,11 +8,11 @@ use FeatureFlag\Access\Domain\Factory\UserBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers UserBuilder
+ * @covers \FeatureFlag\Access\Domain\Factory\UserBuilder
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmail
- * @covers User
+ * @covers \FeatureFlag\Access\Domain\User
  */
 final class UserBuilderTest extends TestCase
 {

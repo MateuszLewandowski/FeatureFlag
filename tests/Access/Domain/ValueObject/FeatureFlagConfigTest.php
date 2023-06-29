@@ -17,10 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
- * @covers ModuloUserId
- * @covers UserEmailDomainName
- * @covers UserId
- * @covers UserRole
+ * @covers \FeatureFlag\Access\Domain\ValueObject\ModuloUserId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
  * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
  * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection

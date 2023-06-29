@@ -15,8 +15,7 @@ use FeatureFlag\Access\Domain\ValueObject\UserRole;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers IsUserRoleAvailable
- * @covers InvalidUserIdException
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
  * @covers \FeatureFlag\Access\Domain\Exception\invalidUserRoleException
  */
 final class IsUserRoleAvailableTest extends TestCase

@@ -13,8 +13,8 @@ use FeatureFlag\Access\Domain\ValueObject\UserRole;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers FeatureFlagConfigBuilder
- * @covers FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
  */
 final class FeatureFlagConfigBuilderTest extends TestCase
 {

@@ -13,8 +13,8 @@ use FeatureFlag\Access\Domain\ValueObject\UserRole;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers UserIdCollection
- * @covers UserId
+ * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
  * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole

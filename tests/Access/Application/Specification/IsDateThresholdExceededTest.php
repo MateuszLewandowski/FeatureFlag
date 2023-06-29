@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded
- * @covers InvalidDateThresholdTimeZoneException
+ * @covers \FeatureFlag\Access\Domain\Exception\InvalidDateThresholdTimeZoneException
  */
 final class IsDateThresholdExceededTest extends TestCase
 {

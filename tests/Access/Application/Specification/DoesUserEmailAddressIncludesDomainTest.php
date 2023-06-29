@@ -15,8 +15,8 @@ use FeatureFlag\Access\Domain\ValueObject\UserEmail;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers DoesUserEmailAddressIncludesDomain
- * @covers InvalidUserEmailDomainNameException
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
+ * @covers \FeatureFlag\Access\Domain\Exception\InvalidUserEmailDomainNameException
  */
 final class DoesUserEmailAddressIncludesDomainTest extends TestCase
 {

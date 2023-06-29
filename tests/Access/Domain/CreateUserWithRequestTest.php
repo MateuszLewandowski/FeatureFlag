@@ -10,9 +10,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @covers User
- * @covers UserBuilder
- * @covers RequestCreatable
+ * @covers \FeatureFlag\Access\Domain\User
+ * @covers \FeatureFlag\Access\Domain\Factory\UserBuilder
+ * @covers \FeatureFlag\Access\Domain\RequestCre
  */
 final class CreateUserWithRequestTest extends TestCase
 {

@@ -8,7 +8,7 @@ use FeatureFlag\Access\Application\DTO\VerifierResultDTO;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers VerifierResultDTO
+ * @covers \FeatureFlag\Access\Application\DTO\VerifierResultDTO
  */
 final class VerifierResultDtoTest extends TestCase
 {

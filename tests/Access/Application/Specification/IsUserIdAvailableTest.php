@@ -14,9 +14,8 @@ use FeatureFlag\Access\Domain\ValueObject\UserId;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Application\Specification\Predicates\IsUserIdAvailableAvailable
- * @covers InvalidUserIdException
- * @covers \FeatureFlag\Access\Domain\Exception\invalidUserRoleException
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable
+ * @covers \FeatureFlag\Access\Domain\Exception\InvalidUserIdException
  */
 final class IsUserIdAvailableTest extends TestCase
 {

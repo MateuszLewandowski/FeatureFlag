@@ -15,13 +15,13 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
- * @covers FeatureFlagJsonFileRepository
- * @covers FeatureFlagId
- * @covers FeatureFlagConfig
- * @covers FeatureFlag
- * @covers FeatureFlagAlreadyExistsException
- * @covers JsonFileNotFoundException
- * @covers FeatureFlagNotFoundException
+ * @covers \FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\FeatureFlag
+ * @covers \FeatureFlag\Access\Infrastructure\Exception\FeatureFlagAlreadyExistsException
+ * @covers \FeatureFlag\Access\Infrastructure\Exception\JsonFileNotFoundException
+ * @covers \FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException
  */
 final class FeatureFlagJsonFileRepositoryTest extends TestCase
 {

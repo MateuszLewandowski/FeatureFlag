@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo
- * @covers InvalidUserIdException
+ * @covers \FeatureFlag\Access\Domain\Exception\InvalidUserIdException
  */
 final class DoesUserIdSatisfyModuloTest extends TestCase
 {
