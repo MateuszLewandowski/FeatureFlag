@@ -4,6 +4,7 @@ Standalone application for features access managing.
 
 ## Install
 
+> git clone <br>
 > app:install-json-database
 
 ## Usage
