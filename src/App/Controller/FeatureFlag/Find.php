@@ -26,13 +26,15 @@ final class Find extends AbstractController
         private readonly LoggerInterface $logger,
     ) {}
 
-    #[Route(path: '/feature-flag/{FeatureFlagId}', methods: 'GET', priority: 150)]
+    #[Route(path: '/feature-flag/{featureFlagId}', methods: 'GET', priority: 75)]
     public function __invoke(Request $request): Response
     {
         try {
             $responseStatus = Response::HTTP_OK;
             $responseContent = FeatureFlagDTOFactory::create(
-                $this->repository->get(new FeatureFlagId($request->get('FeatureFlagId')))
+                $this->repository->get(
+                    new FeatureFlagId($request->get('featureFlagId'))
+                )
             );
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
@@ -41,8 +43,8 @@ final class Find extends AbstractController
                 'request' => $request,
                 'exception' => $e,
             ]);
-        } 
-        
+        }
+
         return new Response(json_encode($responseContent), $responseStatus);
     }
 }

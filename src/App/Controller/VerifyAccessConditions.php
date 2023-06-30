@@ -27,15 +27,15 @@ final class VerifyAccessConditions extends AbstractController
         private readonly LoggerInterface $logger
     ) {}
 
-    #[Route(path: '/access/verify/{featureFlagId}', methods: 'GET', priority: 100)]
+    #[Route(path: '/access/verify/{featureFlagId}', methods: 'GET', priority: 200)]
     public function __invoke(Request $request): Response
     {
         try {
             $featureFlagId = new FeatureFlagId($request->get('featureFlagId'));
             $user = User::createWithRequest($request);
-            
+
             $isAvailable = $this->verifier->verify($featureFlagId, $user);
-            
+
             $responseStatus = $isAvailable
                 ? Response::HTTP_OK
                 : Response::HTTP_FORBIDDEN;
@@ -48,7 +48,7 @@ final class VerifyAccessConditions extends AbstractController
                 'exception' => $e,
             ]);
         }
-        
+
         return new Response(json_encode($responseContent), $responseStatus);
     }
 }

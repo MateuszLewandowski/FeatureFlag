@@ -27,7 +27,7 @@ final class Create extends AbstractController
         private readonly LoggerInterface $logger,
     ) {}
 
-    #[Route(path: '/feature-flag', methods: 'POST', priority: 100)]
+    #[Route(path: '/feature-flag', methods: 'POST', priority: 175)]
     public function __invoke(Request $request): Response
     {
         try {
@@ -46,7 +46,7 @@ final class Create extends AbstractController
                 'exception' => $e,
             ]);
         }
-         
+
         return new Response(json_encode($responseContent ?? ''), $responseStatus);
     }
 }

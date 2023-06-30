@@ -12,9 +12,9 @@ abstract class ValueObjectCollection
 
     protected static function createFromPrimitives(string $type, array $valueObjects): array
     {
-        return array_map(fn (mixed $item) => new $type($item), $valueObjects);
+        return array_map(fn(mixed $item) => new $type($item), $valueObjects);
     }
-    
+
     public function toArray(): array
     {
         return array_map(static function ($item) {

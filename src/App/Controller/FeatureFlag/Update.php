@@ -26,15 +26,15 @@ final class Update extends AbstractController
         private readonly LoggerInterface $logger,
     ) {}
 
-    #[Route(path: '/feature-flag', methods: 'PUT', priority: 100)]
+    #[Route(path: '/feature-flag/{featureFlagId}', methods: 'PUT', priority: 150)]
     public function __invoke(Request $request): Response
     {
         try {
             $responseStatus = Response::HTTP_NO_CONTENT;
             $this->repository->update(
-                new FeatureFlagId($request->request->getString('featureFlagId')),
+                new FeatureFlagId($request->get('featureFlagId')),
                 FeatureFlagConfig::createWithRequest($request)
-            );
+            )->save();
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());
@@ -42,8 +42,8 @@ final class Update extends AbstractController
                 'request' => $request,
                 'exception' => $e,
             ]);
-        } 
-        
+        }
+
         return new Response(json_encode($responseContent ?? ''), $responseStatus);
     }
 }

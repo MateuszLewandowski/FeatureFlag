@@ -25,14 +25,14 @@ final class Delete extends AbstractController
         private readonly LoggerInterface $logger,
     ) {}
 
-    #[Route(path: '/feature-flag', methods: 'DELETE', priority: 80)]
+    #[Route(path: '/feature-flag/{featureFlagId}', methods: 'DELETE', priority: 125)]
     public function __invoke(Request $request): Response
     {
         try {
             $responseStatus = Response::HTTP_NO_CONTENT;
             $this->repository->delete(
-                new FeatureFlagId($request->request->getString('featureFlagId'))
-            );
+                new FeatureFlagId($request->get('featureFlagId'))
+            )->save();
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

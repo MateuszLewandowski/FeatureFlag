@@ -45,7 +45,7 @@ final class FindAll extends AbstractController
                 'exception' => $e,
             ]);
         }
-        
+
         return new Response(json_encode($responseContent), $responseStatus);
     }
 }

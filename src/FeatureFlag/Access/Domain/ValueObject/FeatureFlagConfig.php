@@ -27,12 +27,12 @@ final class FeatureFlagConfig implements RequestCreatable, JsonSerializable, Val
     public static function createWithRequest(Request $request): self
     {
         return FeatureFlagConfigBuilder::create()
-            ->setForceGrantAccess($request->request->getBoolean('forceGrantAccess'))
-            ->setDateThreshold(json_decode($request->request->getString('dateThreshold'), true))
+            ->setForceGrantAccess($request->get('forceGrantAccess', false))
+            ->setDateThreshold(json_decode($request->get('dateThreshold', '') ?? null, true))
             ->setUserEmailDomainNames(json_decode($request->request->getString('userEmailDomainNames', '[]'), true))
             ->setUserIds(json_decode($request->request->getString('userIds', '[]'), true))
             ->setUserRoles(json_decode($request->request->getString('userRoles', '[]'), true))
-            ->setModuloUserId($request->request->getInt('moduloUserId'))
+            ->setModuloUserId($request->get('moduloUserId'))
             ->build();
     }
 
