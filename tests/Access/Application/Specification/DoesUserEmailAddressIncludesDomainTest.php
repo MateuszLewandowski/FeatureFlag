@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Application\Specification;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserEmailDomainNameException;
 use FeatureFlag\Access\Domain\Exception\InvalidUserEmailException;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;

@@ -38,7 +38,6 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
-
  */
 final class AccessSpecificationFactoryTest extends TestCase
 {

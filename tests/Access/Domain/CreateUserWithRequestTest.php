@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Domain;
 
-use FeatureFlag\Access\Domain\Factory\UserBuilder;
 use FeatureFlag\Access\Domain\User;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
