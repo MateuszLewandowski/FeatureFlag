@@ -28,7 +28,7 @@ services:
     resource: '../src/App/Controller/'
     tags: [ 'controller.service_arguments' ]
 
-  App\Controller\VerifyAccessConditionsController:
+  App\Controller\VerifyAccessConditions:
     arguments:
       $verifier: '@FeatureFlag\Access\Application\VerifyAccessRules'
       
@@ -36,14 +36,26 @@ services:
     arguments:
       $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
       
-  App\Controller\FeatureFlag\CreateFeatureFlag:
+  App\Controller\FeatureFlag\Create:
     arguments:
       $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
       
-  App\Controller\FeatureFlag\FindFeatureFlag:
+  App\Controller\FeatureFlag\Delete:
     arguments:
       $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
       
+  App\Controller\FeatureFlag\Find:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
+  App\Controller\FeatureFlag\FindAll:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
+  App\Controller\FeatureFlag\Update:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
   FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository:
     arguments:
       $path: './../src/feature-flags.json'
