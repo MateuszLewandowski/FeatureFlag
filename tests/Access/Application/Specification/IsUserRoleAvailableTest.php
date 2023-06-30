@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Application\Specification;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserIdException;
 use FeatureFlag\Access\Domain\Exception\InvalidUserRoleException;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;
@@ -17,6 +16,14 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
  * @covers \FeatureFlag\Access\Domain\Exception\invalidUserRoleException
+ * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
+ * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\FeatureFlag
+ * @covers \FeatureFlag\Access\Domain\User
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  */
 final class IsUserRoleAvailableTest extends TestCase
 {

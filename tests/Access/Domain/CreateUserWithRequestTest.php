@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @covers \FeatureFlag\Access\Domain\User
  * @covers \FeatureFlag\Access\Domain\Factory\UserBuilder
- * @covers \FeatureFlag\Access\Domain\RequestCre
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmail
  */
 final class CreateUserWithRequestTest extends TestCase
 {

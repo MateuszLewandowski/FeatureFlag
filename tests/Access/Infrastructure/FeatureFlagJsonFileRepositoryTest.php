@@ -22,6 +22,10 @@ use RuntimeException;
  * @covers \FeatureFlag\Access\Infrastructure\Exception\FeatureFlagAlreadyExistsException
  * @covers \FeatureFlag\Access\Infrastructure\Exception\JsonFileNotFoundException
  * @covers \FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException
+ * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
+ * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  */
 final class FeatureFlagJsonFileRepositoryTest extends TestCase
 {

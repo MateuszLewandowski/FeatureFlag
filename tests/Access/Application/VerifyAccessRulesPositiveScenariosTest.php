@@ -17,6 +17,17 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Application\VerifyAccessRules
+ * @covers \FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository
+ * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory
+ * @covers \FeatureFlag\Access\Domain\Specification\AccessSpecification
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
+ * @covers \FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
  */
 final class VerifyAccessRulesPositiveScenariosTest extends TestCase
 {

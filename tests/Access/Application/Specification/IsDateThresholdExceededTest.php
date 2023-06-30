@@ -15,6 +15,11 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded
  * @covers \FeatureFlag\Access\Domain\Exception\InvalidDateThresholdTimeZoneException
+ * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\FeatureFlag
+ * @covers \FeatureFlag\Access\Domain\ValueObject\DateThreshold
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
  */
 final class IsDateThresholdExceededTest extends TestCase
 {

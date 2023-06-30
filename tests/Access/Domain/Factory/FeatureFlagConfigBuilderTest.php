@@ -15,6 +15,15 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
+ * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
+ * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName 
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
+ * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
+ * @covers \FeatureFlag\Access\Domain\ValueObject\DateThreshold
+ * @covers \FeatureFlag\Access\Domain\ValueObject\ModuloUserId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  */
 final class FeatureFlagConfigBuilderTest extends TestCase
 {

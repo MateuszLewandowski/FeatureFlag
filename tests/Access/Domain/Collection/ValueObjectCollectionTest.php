@@ -18,6 +18,8 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
  * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
+ * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
  */
 final class ValueObjectCollectionTest extends TestCase
 {

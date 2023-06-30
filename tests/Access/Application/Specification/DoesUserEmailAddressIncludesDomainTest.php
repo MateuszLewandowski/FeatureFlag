@@ -16,7 +16,15 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
- * @covers \FeatureFlag\Access\Domain\Exception\InvalidUserEmailDomainNameException
+ * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
+ * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\FeatureFlag
+ * @covers \FeatureFlag\Access\Domain\User
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmail
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
  */
 final class DoesUserEmailAddressIncludesDomainTest extends TestCase
 {

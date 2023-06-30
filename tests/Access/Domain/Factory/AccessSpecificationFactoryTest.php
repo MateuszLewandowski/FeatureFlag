@@ -25,6 +25,20 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable
+ * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
+ * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
+ * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
+ * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\FeatureFlag
+ * @covers \FeatureFlag\Access\Domain\ValueObject\DateThreshold
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\ModuloUserId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
+
  */
 final class AccessSpecificationFactoryTest extends TestCase
 {

@@ -16,6 +16,13 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo
  * @covers \FeatureFlag\Access\Domain\Exception\InvalidUserIdException
+ * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\FeatureFlag
+ * @covers \FeatureFlag\Access\Domain\User
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\ModuloUserId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  */
 final class DoesUserIdSatisfyModuloTest extends TestCase
 {
