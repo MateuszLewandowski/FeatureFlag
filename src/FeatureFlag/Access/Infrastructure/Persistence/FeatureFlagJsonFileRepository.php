@@ -18,7 +18,6 @@ final class FeatureFlagJsonFileRepository implements FeatureFlagRepository
 {
     private array $featureFlags = [];
 
-    /** @throws Exception */
     public function __construct(private readonly string $path)
     {
         if (!file_exists($path)) {
