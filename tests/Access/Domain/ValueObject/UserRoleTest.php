@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Domain\ValueObject;
 
-use FeatureFlag\Access\Domain\Exception\InvalidFeatureFlagIdException;
+use FeatureFlag\Access\Domain\Exception\InvalidUserRoleException;
 use FeatureFlag\Access\Domain\ValueObject\UserRole;
 use PHPUnit\Framework\TestCase;
 
@@ -47,7 +47,7 @@ class UserRoleTest extends TestCase
     /** @dataProvider invalid */
     public function testHandleExceptionDuringCreatingUserRole(int $role): void
     {
-        $this->expectException(InvalidFeatureFlagIdException::class);
+        $this->expectException(InvalidUserRoleException::class);
 
         new UserRole($role);
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Application\Specification;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserIdException;
+use FeatureFlag\Access\Domain\Exception\UserIdNotFoundException;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;
 use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo;
@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo
- * @covers \FeatureFlag\Access\Domain\Exception\InvalidUserIdException
+ * @covers \FeatureFlag\Access\Domain\Exception\UserIdNotFoundException
  * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\FeatureFlag
  * @covers \FeatureFlag\Access\Domain\User
@@ -60,7 +60,7 @@ final class DoesUserIdSatisfyModuloTest extends TestCase
 
     public function testExpectsException(): void
     {
-        $this->expectException(InvalidUserIdException::class);
+        $this->expectException(UserIdNotFoundException::class);
 
         $expression = new DoesUserIdSatisfyModulo();
         $expression->execute(

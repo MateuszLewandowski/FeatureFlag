@@ -6,6 +6,7 @@ namespace FeatureFlag\Access\Domain\ValueObject;
 
 use FeatureFlag\Access\Domain\Exception\InvalidUserEmailDomainNameException;
 use FeatureFlag\Access\Domain\Exception\InvalidUserEmailException;
+use FeatureFlag\Access\Domain\Exception\UserEmailNotFoundException;
 use FeatureFlag\Access\Domain\User;
 use Shared\ValueObject;
 
@@ -15,7 +16,7 @@ final class UserEmailDomainName implements ValueObject
         public readonly string $value,
     ) {
         if (!preg_match('/[a-z0-9]{2,255}[.][a-z]{2,4}/', $value)) {
-            throw new InvalidUserEmailDomainNameException();
+            throw new InvalidUserEmailDomainNameException($value);
         }
     }
 
@@ -24,7 +25,7 @@ final class UserEmailDomainName implements ValueObject
         $email = $user->email?->value;
 
         if (null === $email) {
-            throw new InvalidUserEmailException();
+            throw new UserEmailNotFoundException();
         }
 
         $parts = explode('@', $email);

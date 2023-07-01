@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FeatureFlag\Access\Domain\ValueObject;
 
 use FeatureFlag\Access\Domain\Exception\InvalidFeatureFlagIdException;
+use FeatureFlag\Access\Domain\Exception\InvalidUserRoleException;
 use Shared\ValueObject;
 
 final class UserRole implements ValueObject
@@ -16,7 +17,7 @@ final class UserRole implements ValueObject
         public readonly int $value,
     ) {
         if (self::MIN > $value || self::MAX < $value) {
-            throw new InvalidFeatureFlagIdException();
+            throw new InvalidUserRoleException($value);
         }
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Application\Specification;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserIdException;
+use FeatureFlag\Access\Domain\Exception\UserIdNotFoundException;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;
 use FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable;
@@ -14,8 +14,6 @@ use FeatureFlag\Access\Domain\ValueObject\UserId;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Domain\Exception\invalidUserRoleException
- * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
  * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
  * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\FeatureFlag
@@ -25,6 +23,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
+ * @covers \FeatureFlag\Access\Domain\Exception\UserIdNotFoundException
  */
 final class IsUserIdAvailableTest extends TestCase
 {
@@ -62,7 +61,7 @@ final class IsUserIdAvailableTest extends TestCase
 
     public function testExpectsException(): void
     {
-        $this->expectException(invalidUserIdException::class);
+        $this->expectException(UserIdNotFoundException::class);
 
         $expression = new IsUserIdAvailable();
         $expression->execute(

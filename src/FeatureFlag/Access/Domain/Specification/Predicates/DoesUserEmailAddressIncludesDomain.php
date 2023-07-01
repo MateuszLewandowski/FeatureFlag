@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FeatureFlag\Access\Domain\Specification\Predicates;
 
 use FeatureFlag\Access\Domain\Exception\InvalidUserEmailException;
+use FeatureFlag\Access\Domain\Exception\UserEmailNotFoundException;
 use FeatureFlag\Access\Domain\FeatureFlag;
 use FeatureFlag\Access\Domain\User;
 use FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName;
@@ -14,7 +15,7 @@ final class DoesUserEmailAddressIncludesDomain implements UserExtendedExpressibl
     public function execute(FeatureFlag $featureFlag, User $user): bool
     {
         if (null === $user->email?->value) {
-            throw new InvalidUserEmailException();
+            throw new UserEmailNotFoundException();
         }
 
         return $featureFlag->config->userEmailDomainNames->exists(

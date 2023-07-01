@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Access\Domain\ValueObject;
 
 use FeatureFlag\Access\Domain\Exception\InvalidUserEmailDomainNameException;
-use FeatureFlag\Access\Domain\Exception\InvalidUserEmailException;
+use FeatureFlag\Access\Domain\Exception\UserEmailNotFoundException;
 use FeatureFlag\Access\Domain\User;
 use FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +14,8 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
  * @covers \FeatureFlag\Access\Domain\Exception\InvalidUserEmailDomainNameException
  * @covers \FeatureFlag\Access\Domain\Exception\InvalidUserEmailException
+ * @covers \FeatureFlag\Access\Domain\Exception\UserRoleNotFoundException
+ * @covers \FeatureFlag\Access\Domain\Exception\UserEmailNotFoundException
  * @covers \FeatureFlag\Access\Domain\User
  */
 class UserEmailDomainNameTest extends TestCase
@@ -58,7 +60,7 @@ class UserEmailDomainNameTest extends TestCase
 
     public function testCreateWithUserWithNoEmailProvided(): void
     {
-        $this->expectException(InvalidUserEmailException::class);
+        $this->expectException(UserEmailNotFoundException::class);
 
         UserEmailDomainName::createWithUser(new User(null, null, null));
     }

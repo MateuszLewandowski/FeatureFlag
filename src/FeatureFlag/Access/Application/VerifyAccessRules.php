@@ -31,7 +31,7 @@ final class VerifyAccessRules
         return array_reduce($accessSpecificationSet, static fn(bool $isExpressionSatisfied, Expressible $expressible) => match (true) {
                 $expressible instanceof EnvironmentExtendedExpressible => $expressible->execute($featureFlag),
                 $expressible instanceof UserExtendedExpressible => $expressible->execute($featureFlag, $user),
-                default => throw new ExpressionNotFoundException(),
+                default => throw new ExpressionNotFoundException($expressible),
             } && $isExpressionSatisfied, true);
     }
 }

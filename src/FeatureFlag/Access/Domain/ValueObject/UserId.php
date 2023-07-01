@@ -15,7 +15,7 @@ final class UserId implements ValueObject
         public readonly int $value,
     ) {
         if ($value < self::MIN) {
-            throw new InvalidUserIdException();
+            throw new InvalidUserIdException($value);
         }
     }
 }

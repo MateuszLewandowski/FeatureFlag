@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Application\Specification;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserEmailException;
+use FeatureFlag\Access\Domain\Exception\UserEmailNotFoundException;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;
 use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain;
@@ -24,6 +24,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmail
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
+ * @covers \FeatureFlag\Access\Domain\Exception\UserEmailNotFoundException
  */
 final class DoesUserEmailAddressIncludesDomainTest extends TestCase
 {
@@ -61,7 +62,7 @@ final class DoesUserEmailAddressIncludesDomainTest extends TestCase
 
     public function testExpectsException(): void
     {
-        $this->expectException(InvalidUserEmailException::class);
+        $this->expectException(UserEmailNotFoundException::class);
 
         $expression = new DoesUserEmailAddressIncludesDomain();
         $expression->execute(

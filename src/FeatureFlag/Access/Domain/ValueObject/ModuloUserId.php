@@ -16,7 +16,7 @@ final class ModuloUserId implements ValueObject
         public readonly int $value
     ) {
         if (self::MIN >= $value || self::MAX < $value) {
-            throw new InvalidModuloUserIdException();
+            throw new InvalidModuloUserIdException($value);
         }
     }
 }

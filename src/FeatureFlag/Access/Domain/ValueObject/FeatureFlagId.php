@@ -13,7 +13,7 @@ final class FeatureFlagId implements ValueObject
         public readonly string $value,
     ) {
         if (!preg_match('/[a-zA-Z0-9-_.]{2,64}$/', $value)) {
-            throw new InvalidFeatureFlagIdException();
+            throw new InvalidFeatureFlagIdException($value);
         }
     }
 }

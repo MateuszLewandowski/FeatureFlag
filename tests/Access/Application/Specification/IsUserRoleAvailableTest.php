@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Application\Specification;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserRoleException;
+use FeatureFlag\Access\Domain\Exception\UserRoleNotFoundException;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\FeatureFlag;
 use FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable;
@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
- * @covers \FeatureFlag\Access\Domain\Exception\invalidUserRoleException
  * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
  * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
  * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
@@ -24,6 +23,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
+ * @covers \FeatureFlag\Access\Domain\Exception\UserRoleNotFoundException
  */
 final class IsUserRoleAvailableTest extends TestCase
 {
@@ -61,7 +61,7 @@ final class IsUserRoleAvailableTest extends TestCase
 
     public function testExpectsException(): void
     {
-        $this->expectException(invalidUserRoleException::class);
+        $this->expectException(UserRoleNotFoundException::class);
 
         $expression = new IsUserRoleAvailable();
         $expression->execute(

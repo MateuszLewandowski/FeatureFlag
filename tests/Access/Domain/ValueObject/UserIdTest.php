@@ -46,10 +46,10 @@ class UserIdTest extends TestCase
     }
 
     /** @dataProvider invalid */
-    public function testHandleExceptionDuringCreatingUserId(int $modulo): void
+    public function testHandleExceptionDuringCreatingUserId(int $id): void
     {
         $this->expectException(InvalidUserIdException::class);
 
-        new UserId($modulo);
+        new UserId($id);
     }
 }
