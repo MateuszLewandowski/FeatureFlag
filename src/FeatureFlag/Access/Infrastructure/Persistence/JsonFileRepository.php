@@ -68,6 +68,16 @@ final class JsonFileRepository implements FeatureFlagRepository
         return $this;
     }
 
+    private function save(): void
+    {
+        /** @var FeatureFlag $featureFlag */
+        foreach ($this->featureFlags as $featureFlag) {
+            $featureFlags[$featureFlag->id->value] = $featureFlag->config->jsonSerialize();
+        }
+
+        file_put_contents($this->path, json_encode($featureFlags ?? []));
+    }
+
     public function delete(FeatureFlagId $id): self
     {
         if (!isset($this->featureFlags[$id->value])) {
@@ -92,20 +102,10 @@ final class JsonFileRepository implements FeatureFlagRepository
         return $this;
     }
 
-    private function save(): void
-    {
-        /** @var FeatureFlag $featureFlag */
-        foreach ($this->featureFlags as $featureFlag) {
-            $featureFlags[$featureFlag->id->value] = $featureFlag->config->jsonSerialize();
-        }
-
-        file_put_contents($this->path, json_encode($featureFlags ?? []));
-    }
-    
     public function clean(): void
     {
         $this->featureFlags = [];
-        
+
         $this->save();
     }
 }

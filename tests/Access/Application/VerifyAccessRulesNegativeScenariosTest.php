@@ -14,6 +14,7 @@ use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use FeatureFlag\Access\Infrastructure\Persistence\JsonFileRepository;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 /**
  * @covers \FeatureFlag\Access\Application\VerifyAccessRules
@@ -114,7 +115,7 @@ final class VerifyAccessRulesNegativeScenariosTest extends TestCase
             );
 
             $this->repository->clean();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             dd($e);
         }
     }

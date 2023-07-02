@@ -8,7 +8,6 @@ use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\Exception\ExpressionNotFoundException;
 use FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory;
 use FeatureFlag\Access\Domain\Specification\Predicates\EnvironmentExtendedExpressible;
-use FeatureFlag\Access\Domain\Specification\Predicates\Expressible;
 use FeatureFlag\Access\Domain\Specification\Predicates\UserExtendedExpressible;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 
@@ -27,7 +26,7 @@ final class VerifyAccessRules
         }
 
         $accessSpecificationSet = AccessSpecificationFactory::create($featureFlag)->pull();
-        
+
         foreach ($accessSpecificationSet as $expressible) {
             $isExpressionSatisfied = match (true) {
                 $expressible instanceof EnvironmentExtendedExpressible => $expressible->execute($featureFlag),
@@ -41,7 +40,7 @@ final class VerifyAccessRules
         }
 
         return true;
-        
+
 //        return array_reduce($accessSpecificationSet, static fn(bool $isExpressionSatisfied, Expressible $expressible) => match (true) {
 //                $expressible instanceof EnvironmentExtendedExpressible => $expressible->execute($featureFlag),
 //                $expressible instanceof UserExtendedExpressible => $expressible->execute($featureFlag, $user),

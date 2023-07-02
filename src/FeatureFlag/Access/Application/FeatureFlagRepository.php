@@ -14,7 +14,7 @@ interface FeatureFlagRepository
     public function getFeatureFlags(): array;
 
     public function get(FeatureFlagId $id): FeatureFlag;
-    
+
     public function set(FeatureFlag $featureFlag): self;
 
     public function delete(FeatureFlagId $id): self;

@@ -6,10 +6,10 @@ namespace FeatureFlag\Access\Infrastructure\Persistence;
 
 use App\Entity\FeatureFlag as Entity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
 use FeatureFlag\Access\Application\FeatureFlagRepository;
-use Doctrine\DBAL\Connection;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigFactory;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
@@ -20,7 +20,7 @@ use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException;
 final class DatabaseRepository extends ServiceEntityRepository implements FeatureFlagRepository
 {
     private readonly Connection $connection;
-    
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Entity::class);
@@ -30,11 +30,11 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
     public function getFeatureFlags(): array
     {
         $featureFlagsEntities = $this->findAll();
-        
+
         if (empty($featureFlagsEntities)) {
             return [];
         }
-        
+
         return array_map(static function (Entity $entity) {
             return new FeatureFlag(
                 new FeatureFlagId($entity->getId()),
@@ -47,11 +47,11 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
     {
         /** @var Entity $featureFlagEntity */
         $featureFlagEntity = $this->find($id->value);
-        
+
         if (!$featureFlagEntity) {
             throw new FeatureFlagNotFoundException($id);
         }
-        
+
         return new FeatureFlag(
             new FeatureFlagId($featureFlagEntity->getId()),
             FeatureFlagConfigFactory::createWithEntity($featureFlagEntity)
@@ -66,19 +66,21 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
                 VALUES (:id, :force_grant_access, :starts_at, :ends_at, :user_email_domain_names, :user_ids, :user_roles, :modulo_user_id, :created_at, :updated_at)
             SQL
         );
-        
+
         $timestamp = date('Y-m-d h:i:s');
-        
+
         try {
-            $stmt->executeStatement(array_merge([
-                'id' => $featureFlag->id->value,
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp,
-            ], $featureFlag->config->databaseSerialize()));
+            $stmt->executeStatement(
+                array_merge([
+                    'id' => $featureFlag->id->value,
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp,
+                ], $featureFlag->config->databaseSerialize())
+            );
         } catch (UniqueConstraintViolationException $e) {
             throw new FeatureFlagAlreadyExistsException($featureFlag);
         }
-        
+
         return $this;
     }
 
@@ -91,7 +93,7 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
         );
 
         $stmt->executeStatement([
-            'id' => $id->value
+            'id' => $id->value,
         ]);
 
         return $this;
@@ -117,11 +119,11 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
                     id = :id
             SQL
         );
-        
+
         $stmt->executeStatement(
             array_merge([
-                    'id' => $id->value,
-                    'updated_at' => date('Y-m-d h:i:s'),
+                'id' => $id->value,
+                'updated_at' => date('Y-m-d h:i:s'),
             ], $config->databaseSerialize())
         );
 

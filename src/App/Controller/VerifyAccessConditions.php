@@ -8,7 +8,6 @@ use App\Core\Validation\ResponseCodeValidator;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
 use FeatureFlag\Access\Application\DTO\VerifierResultDTO;
 use FeatureFlag\Access\Application\VerifyAccessRules;
-use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\Factory\UserFactory;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;

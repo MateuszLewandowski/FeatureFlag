@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Domain\Exception;
 
-use Symfony\Component\HttpFoundation\Response;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
 
 final class InvalidFeatureFlagNameException extends InvalidArgumentException
 {

@@ -13,7 +13,7 @@ final class IsEndsAtDateExceeded implements EnvironmentExtendedExpressible
     {
         $endsAt = $featureFlag->config->endsAt;
         $now = new DateTimeImmutable('now', $endsAt->value->getTimezone());
-        
+
         return $endsAt->value->format($endsAt::FORMAT) >= $now->format($endsAt::FORMAT);
     }
 }

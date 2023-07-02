@@ -44,7 +44,6 @@ final class IsStartsAtDateExceededTest extends TestCase
                 new FeatureFlagId('Simply'),
                 FeatureFlagConfigBuilder::create()
                     ->setStartsAt((new DateTimeImmutable('tomorrow'))->format('Y-m-d H:i:s'))
-
                     ->build()
             ),
         );

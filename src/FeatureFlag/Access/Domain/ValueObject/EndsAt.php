@@ -19,7 +19,7 @@ final class EndsAt implements JsonSerializable, ValueObject, DateTimeSerializabl
         if (null === $startsAt) {
             return;
         }
-        
+
         if ($startsAt->value > $this->value) {
             throw new InvalidEndsAtException();
         }

@@ -14,8 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api/v1')]
 final class HealthCheck extends AbstractController
 {
-    public function __construct(
-    ) {}
+    public function __construct() {}
 
     #[Route(path: '/ping', methods: 'GET', priority: 100)]
     public function __invoke(Request $request): Response

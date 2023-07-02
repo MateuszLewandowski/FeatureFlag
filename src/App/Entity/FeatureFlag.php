@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,10 +17,10 @@ class FeatureFlag
     private ?bool $force_grant_access = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $starts_at = null;
+    private ?DateTimeImmutable $starts_at = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $ends_at = null;
+    private ?DateTimeImmutable $ends_at = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $user_email_domain_names = [];
@@ -34,10 +35,10 @@ class FeatureFlag
     private ?int $modulo_user_id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?DateTimeImmutable $created_at = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?DateTimeImmutable $updated_at = null;
 
     public function getId(): ?string
     {
@@ -63,24 +64,24 @@ class FeatureFlag
         return $this;
     }
 
-    public function getStartsAt(): ?\DateTimeImmutable
+    public function getStartsAt(): ?DateTimeImmutable
     {
         return $this->starts_at;
     }
 
-    public function setStartsAt(?\DateTimeImmutable $starts_at): static
+    public function setStartsAt(?DateTimeImmutable $starts_at): static
     {
         $this->starts_at = $starts_at;
 
         return $this;
     }
 
-    public function getEndsAt(): ?\DateTimeImmutable
+    public function getEndsAt(): ?DateTimeImmutable
     {
         return $this->ends_at;
     }
 
-    public function setEndsAt(?\DateTimeImmutable $ends_at): static
+    public function setEndsAt(?DateTimeImmutable $ends_at): static
     {
         $this->ends_at = $ends_at;
 
@@ -123,24 +124,24 @@ class FeatureFlag
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updated_at): static
+    public function setUpdatedAt(?DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
 

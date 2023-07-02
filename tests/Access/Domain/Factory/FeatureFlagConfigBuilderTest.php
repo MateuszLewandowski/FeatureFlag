@@ -60,17 +60,23 @@ final class FeatureFlagConfigBuilderTest extends TestCase
             ->build();
 
         $this->assertSame($forceGrantAccess, $config->forceGrantAccess);
-        $this->assertSame($userEmailDomainNames, $config->userEmailDomainNames
-            ? array_map(static fn(UserEmailDomainName $name) => $name->value, $config->userEmailDomainNames->getCollection())
-            : null
+        $this->assertSame(
+            $userEmailDomainNames,
+            $config->userEmailDomainNames
+                ? array_map(static fn(UserEmailDomainName $name) => $name->value, $config->userEmailDomainNames->getCollection())
+                : null
         );
-        $this->assertSame($userIds, $config->userIds
-            ? array_map(static fn(UserId $id) => $id->value, $config->userIds->getCollection())
-            : null
+        $this->assertSame(
+            $userIds,
+            $config->userIds
+                ? array_map(static fn(UserId $id) => $id->value, $config->userIds->getCollection())
+                : null
         );
-        $this->assertSame($userRoles, $config->userRoles
-            ? array_map(static fn(UserRole $role) => $role->value, $config->userRoles->getCollection())
-            : null
+        $this->assertSame(
+            $userRoles,
+            $config->userRoles
+                ? array_map(static fn(UserRole $role) => $role->value, $config->userRoles->getCollection())
+                : null
         );
         $this->assertSame($moduloUserId, $config->moduloUserId?->value);
 

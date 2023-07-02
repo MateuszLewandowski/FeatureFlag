@@ -60,7 +60,7 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
     public function testSetWhenFeatureFlagAlreadyExists(): void
     {
         $this->expectException(FeatureFlagAlreadyExistsException::class);
-        
+
         $featureFlag = new FeatureFlag(
             new FeatureFlagId('Key52'),
             FeatureFlagConfigBuilder::create()->build()

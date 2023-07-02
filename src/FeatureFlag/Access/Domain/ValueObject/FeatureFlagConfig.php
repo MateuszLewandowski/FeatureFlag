@@ -22,19 +22,6 @@ final class FeatureFlagConfig implements JsonSerializable, ValueObject
         public readonly ?ModuloUserId $moduloUserId,
     ) {}
 
-    public function jsonSerialize(): array
-    {
-        return [
-            'forceGrantAccess' => $this->forceGrantAccess,
-            'startsAt' => $this->startsAt?->jsonSerialize(),
-            'endsAt' => $this->endsAt?->jsonSerialize(),
-            'moduloUserId' => $this?->moduloUserId?->value,
-            'userRoles' => $this->userRoles?->toArray(),
-            'userEmailDomainNames' => $this->userEmailDomainNames?->toArray(),
-            'userIds' => $this->userIds?->toArray(),
-        ];
-    }
-    
     public function databaseSerialize(): array
     {
         return [
@@ -45,6 +32,19 @@ final class FeatureFlagConfig implements JsonSerializable, ValueObject
             'user_roles' => json_encode($this->userRoles?->toArray()),
             'user_email_domain_names' => json_encode($this->userEmailDomainNames?->toArray()),
             'user_ids' => json_encode($this->userIds?->toArray()),
+        ];
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'forceGrantAccess' => $this->forceGrantAccess,
+            'startsAt' => $this->startsAt?->jsonSerialize(),
+            'endsAt' => $this->endsAt?->jsonSerialize(),
+            'moduloUserId' => $this?->moduloUserId?->value,
+            'userRoles' => $this->userRoles?->toArray(),
+            'userEmailDomainNames' => $this->userEmailDomainNames?->toArray(),
+            'userIds' => $this->userIds?->toArray(),
         ];
     }
 }

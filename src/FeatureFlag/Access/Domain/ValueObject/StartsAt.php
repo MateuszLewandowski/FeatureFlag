@@ -13,8 +13,7 @@ final class StartsAt implements JsonSerializable, ValueObject, DateTimeSerializa
 {
     public function __construct(
         public readonly DateTimeImmutable $value,
-    ) {
-    }
+    ) {}
 
     public function jsonSerialize(): string
     {
