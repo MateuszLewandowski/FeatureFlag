@@ -20,3 +20,4 @@
 .env.test
 /src/feature-flags.json
 /src/test.feature-flags.json
+.idea
