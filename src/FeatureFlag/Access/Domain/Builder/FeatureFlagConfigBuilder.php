@@ -2,27 +2,26 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Factory;
+namespace FeatureFlag\Access\Domain\Builder;
 
 use DateTimeImmutable;
-use DateTimeZone;
 use FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection;
 use FeatureFlag\Access\Domain\Collection\UserIdCollection;
 use FeatureFlag\Access\Domain\Collection\UserRoleCollection;
-use FeatureFlag\Access\Domain\Exception\InvalidDateThresholdTimeZoneException;
-use FeatureFlag\Access\Domain\ValueObject\DateThreshold;
+use FeatureFlag\Access\Domain\ValueObject\EndsAt;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use FeatureFlag\Access\Domain\ValueObject\ModuloUserId;
-use Throwable;
+use FeatureFlag\Access\Domain\ValueObject\StartsAt;
 
 final class FeatureFlagConfigBuilder
 {
-    public ?UserEmailDomainNameCollection $userEmailDomainNames = null;
-    public ?UserIdCollection $userIds = null;
-    public ?UserRoleCollection $userRoles = null;
-    public ?ModuloUserId $moduloUserId = null;
     private ?bool $forceGrantAccess = false;
-    private ?DateThreshold $dateThreshold = null;
+    private ?UserEmailDomainNameCollection $userEmailDomainNames = null;
+    private ?UserIdCollection $userIds = null;
+    private ?UserRoleCollection $userRoles = null;
+    private ?ModuloUserId $moduloUserId = null;
+    private ?StartsAt $startsAt = null;
+    private ?EndsAt $endsAt = null;
 
     public static function create(): self
     {
@@ -40,25 +39,26 @@ final class FeatureFlagConfigBuilder
         return $this;
     }
 
-    public function setDateThreshold(?array $dateThreshold): self
+    public function setEndsAt(?string $endsAt): self
     {
-        if (null === $dateThreshold) {
+        if (null === $endsAt) {
             return $this;
         }
 
-        if (!isset($dateThreshold['date']) or !isset($dateThreshold['timeZone'])) {
+        $this->endsAt = new EndsAt(new DateTimeImmutable($endsAt), $this->startsAt ?: null);
+
+        return $this;
+    }
+
+    public function setStartsAt(?string $startsAt): self
+    {
+        if (null === $startsAt) {
             return $this;
         }
 
-        try {
-            $this->dateThreshold = new DateThreshold(
-                new DateTimeImmutable($dateThreshold['date'], new DateTimeZone($dateThreshold['timeZone']))
-            );
+        $this->startsAt = new StartsAt(new DateTimeImmutable($startsAt));
 
-            return $this;
-        } catch (Throwable $e) {
-            throw new InvalidDateThresholdTimeZoneException($e->getMessage());
-        }
+        return $this;
     }
 
     public function setUserEmailDomainNames(?array $userEmailDomainNames): self
@@ -103,7 +103,8 @@ final class FeatureFlagConfigBuilder
     {
         return new FeatureFlagConfig(
             $this->forceGrantAccess,
-            $this->dateThreshold,
+            $this->startsAt,
+            $this->endsAt,
             $this->userEmailDomainNames,
             $this->userIds,
             $this->userRoles,

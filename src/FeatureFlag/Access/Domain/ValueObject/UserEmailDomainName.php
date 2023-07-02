@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Domain\ValueObject;
 
+use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\Exception\InvalidUserEmailDomainNameException;
-use FeatureFlag\Access\Domain\Exception\InvalidUserEmailException;
 use FeatureFlag\Access\Domain\Exception\UserEmailNotFoundException;
-use FeatureFlag\Access\Domain\User;
 use Shared\ValueObject;
 
 final class UserEmailDomainName implements ValueObject

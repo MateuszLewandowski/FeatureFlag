@@ -15,6 +15,8 @@ final class FeatureFlagDtoTest extends TestCase
     public function testCreate(): void
     {
         $featureFlagId = '5341112';
+        $startsAt = '2024-01-01 12:00:55';
+        $endsAt = '2022-01-05 14:15:55';
         $userEmailDomainNames = ['gmail.com'];
         $userIds = [1, 6, 32];
         $userRoles = [1, 5];
@@ -23,6 +25,8 @@ final class FeatureFlagDtoTest extends TestCase
         $dto = new FeatureFlagDTO(
             $featureFlagId,
             false,
+            $startsAt,
+            $endsAt,
             $userEmailDomainNames,
             $userIds,
             $userRoles,
@@ -31,6 +35,8 @@ final class FeatureFlagDtoTest extends TestCase
 
         $this->assertSame($featureFlagId, $dto->featureFlagId);
         $this->assertSame(false, $dto->forceGrantAccess);
+        $this->assertSame($startsAt, $dto->startsAt);
+        $this->assertSame($endsAt, $dto->endsAt);
         $this->assertSame($userEmailDomainNames, $dto->userEmailDomainNames);
         $this->assertSame($userIds, $dto->userIds);
         $this->assertSame($userRoles, $dto->userRoles);

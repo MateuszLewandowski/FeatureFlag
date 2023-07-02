@@ -1,2 +1,31 @@
 imports:
   - { resource: '%kernel.project_dir%/services.yaml' }
+  
+services:
+  FeatureFlag\Access\Application\VerifyAccessRules:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
+  App\Controller\FeatureFlag\Create:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
+  App\Controller\FeatureFlag\Delete:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
+  App\Controller\FeatureFlag\Find:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
+  App\Controller\FeatureFlag\FindAll:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
+  App\Controller\FeatureFlag\Update:
+    arguments:
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
+  
+  FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository:
+    arguments:
+      $path: './../src/feature-flags.json'

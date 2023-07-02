@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Domain\ValueObject;
 
-use FeatureFlag\Access\Domain\Exception\InvalidFeatureFlagIdException;
+use FeatureFlag\Access\Domain\Exception\InvalidFeatureFlagNameException;
 use FeatureFlag\Access\Domain\Exception\InvalidUserRoleException;
 use Shared\ValueObject;
 

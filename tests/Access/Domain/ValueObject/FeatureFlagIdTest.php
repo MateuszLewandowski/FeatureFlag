@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Domain\ValueObject;
 
-use FeatureFlag\Access\Domain\Exception\InvalidFeatureFlagIdException;
+use FeatureFlag\Access\Domain\Exception\InvalidFeatureFlagNameException;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
- * @covers \FeatureFlag\Access\Domain\Exception\InvalidFeatureFlagIdException
+ * @covers \FeatureFlag\Access\Domain\Exception\InvalidFeatureFlagNameException
  */
 final class FeatureFlagIdTest extends TestCase
 {
@@ -67,7 +67,7 @@ final class FeatureFlagIdTest extends TestCase
     /** @dataProvider negativeScenarios */
     public function testHandleExceptionDuringCreatingFeatureFlagId(string $featureFlagIdKey): void
     {
-        $this->expectException(InvalidFeatureFlagIdException::class);
+        $this->expectException(InvalidFeatureFlagNameException::class);
 
         new FeatureFlagId($featureFlagIdKey);
     }

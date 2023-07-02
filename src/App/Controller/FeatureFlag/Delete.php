@@ -32,7 +32,7 @@ final class Delete extends AbstractController
             $responseStatus = Response::HTTP_NO_CONTENT;
             $this->repository->delete(
                 new FeatureFlagId($request->get('featureFlagId'))
-            )->save();
+            );
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

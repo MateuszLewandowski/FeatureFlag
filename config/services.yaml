@@ -31,34 +31,31 @@ services:
   App\Controller\VerifyAccessConditions:
     arguments:
       $verifier: '@FeatureFlag\Access\Application\VerifyAccessRules'
-      
+    
   FeatureFlag\Access\Application\VerifyAccessRules:
     arguments:
-      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
-      
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\DatabaseRepository'
+
   App\Controller\FeatureFlag\Create:
     arguments:
-      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
-      
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\DatabaseRepository'
+
   App\Controller\FeatureFlag\Delete:
     arguments:
-      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
-      
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\DatabaseRepository'
+
   App\Controller\FeatureFlag\Find:
     arguments:
-      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
-  
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\DatabaseRepository'
+
   App\Controller\FeatureFlag\FindAll:
     arguments:
-      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
-  
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\DatabaseRepository'
+
   App\Controller\FeatureFlag\Update:
     arguments:
-      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository'
-  
-  FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository:
-    arguments:
-      $path: './../src/feature-flags.json'
-  
+      $repository: '@FeatureFlag\Access\Infrastructure\Persistence\DatabaseRepository'
+
+
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

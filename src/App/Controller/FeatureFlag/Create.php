@@ -7,8 +7,8 @@ namespace App\Controller\FeatureFlag;
 use App\Core\Validation\ResponseCodeValidator;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
 use FeatureFlag\Access\Application\FeatureFlagRepository;
-use FeatureFlag\Access\Domain\FeatureFlag;
-use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
+use FeatureFlag\Access\Domain\Entity\FeatureFlag;
+use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigFactory;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,9 +35,9 @@ final class Create extends AbstractController
             $this->repository->set(
                 new FeatureFlag(
                     new FeatureFlagId($request->request->getString('featureFlagId')),
-                    FeatureFlagConfig::createWithRequest($request)
+                    FeatureFlagConfigFactory::createWithRequest($request)
                 )
-            )->save();
+            );
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

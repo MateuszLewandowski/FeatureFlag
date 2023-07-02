@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Domain\Factory;
 
-use FeatureFlag\Access\Domain\FeatureFlag;
+use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\Specification\AccessSpecification;
 use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain;
 use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo;
-use FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded;
+use FeatureFlag\Access\Domain\Specification\Predicates\IsEndsAtDateExceeded;
+use FeatureFlag\Access\Domain\Specification\Predicates\IsStartsAtDateExceeded;
 use FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable;
 use FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable;
 
 final class AccessSpecificationFactory
 {
     private const MAP = [
-        'dateThreshold' => IsDateThresholdExceeded::class,
+        'startsAt' => IsStartsAtDateExceeded::class,
+        'endsAt' => IsEndsAtDateExceeded::class,
         'userIds' => IsUserIdAvailable::class,
         'userRoles' => IsUserRoleAvailable::class,
         'userEmailDomainNames' => DoesUserEmailAddressIncludesDomain::class,

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Domain\Factory;
 
-use FeatureFlag\Access\Domain\Factory\UserBuilder;
+use FeatureFlag\Access\Domain\Builder\UserBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Domain\Factory\UserBuilder
+ * @covers \FeatureFlag\Access\Domain\Builder\UserBuilder
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmail
- * @covers \FeatureFlag\Access\Domain\User
+ * @covers \FeatureFlag\Access\Domain\Entity\User
  */
 final class UserBuilderTest extends TestCase
 {

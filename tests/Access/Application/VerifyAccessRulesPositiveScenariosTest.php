@@ -7,27 +7,31 @@ namespace App\Tests\Access\Application;
 use DateTimeImmutable;
 use FeatureFlag\Access\Application\FeatureFlagRepository;
 use FeatureFlag\Access\Application\VerifyAccessRules;
-use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
-use FeatureFlag\Access\Domain\Factory\UserBuilder;
-use FeatureFlag\Access\Domain\FeatureFlag;
-use FeatureFlag\Access\Domain\User;
+use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Domain\Builder\UserBuilder;
+use FeatureFlag\Access\Domain\Entity\FeatureFlag;
+use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
-use FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository;
+use FeatureFlag\Access\Infrastructure\Persistence\JsonFileRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Application\VerifyAccessRules
- * @covers \FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository
+ * @covers \FeatureFlag\Access\Infrastructure\Persistence\JsonFileRepository
  * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
  * @covers \FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory
  * @covers \FeatureFlag\Access\Domain\Specification\AccessSpecification
- * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsStartsAtDateExceeded
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
- * @covers \FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsEndsAtDateExceeded
+ * @covers \FeatureFlag\Access\Infrastructure\Persistence\JsonFileRepository
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
+ * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\ValueObject\StartsAt
+ * @covers \FeatureFlag\Access\Domain\ValueObject\EndsAt
  */
 final class VerifyAccessRulesPositiveScenariosTest extends TestCase
 {
@@ -43,10 +47,8 @@ final class VerifyAccessRulesPositiveScenariosTest extends TestCase
                 new FeatureFlag(
                     new FeatureFlagId('Key_4'),
                     FeatureFlagConfigBuilder::create()
-                        ->setDateThreshold([
-                            'date' => (new DateTimeImmutable('yesterday'))->format('Y-m-d'),
-                            'timeZone' => 'Europe/Warsaw',
-                        ])
+                        ->setStartsAt((new DateTimeImmutable('previous monday'))->format('Y-m-d H:i:s'))
+                        ->setEndsAt((new DateTimeImmutable('next friday'))->format('Y-m-d H:i:s'))
                         ->build()
                 ),
                 UserBuilder::create()->build(),
@@ -55,10 +57,7 @@ final class VerifyAccessRulesPositiveScenariosTest extends TestCase
                 new FeatureFlag(
                     new FeatureFlagId('Key_5'),
                     FeatureFlagConfigBuilder::create()
-                        ->setDateThreshold([
-                            'date' => (new DateTimeImmutable('yesterday'))->format('Y-m-d'),
-                            'timeZone' => 'Europe/Warsaw',
-                        ])
+                        ->setStartsAt((new DateTimeImmutable('midnight'))->format('Y-m-d H:i:s'))
                         ->setUserRoles([1, 2, 3])
                         ->setUserIds([1, 2, 3])
                         ->build()
@@ -93,10 +92,8 @@ final class VerifyAccessRulesPositiveScenariosTest extends TestCase
                         ->setUserRoles([4, 5, 6])
                         ->setUserEmailDomainNames(['wp.pl', 'gmail.com'])
                         ->setModuloUserId(3)
-                        ->setDateThreshold([
-                            'date' => (new DateTimeImmutable('yesterday'))->format('Y-m-d'),
-                            'timeZone' => 'Europe/Warsaw',
-                        ])
+                        ->setStartsAt((new DateTimeImmutable('yesterday'))->format('Y-m-d H:i:s'))
+                        ->setEndsAt((new DateTimeImmutable('next friday'))->format('Y-m-d H:i:s'))
                         ->build()
                 ),
                 UserBuilder::create()->setId(3)->setRole(6)->setEmail('user@gmail.com')->build(),
@@ -106,15 +103,10 @@ final class VerifyAccessRulesPositiveScenariosTest extends TestCase
 
     public function setUp(): void
     {
-        $this->repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $this->repository = new JsonFileRepository(self::PATH);
         $this->verifyAccessRules = new VerifyAccessRules($this->repository);
 
         parent::setUp();
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
     }
 
     /** @dataProvider scenarios */

@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\Tests\Access\Domain\Factory;
 
 use DateTimeImmutable;
-use DateTimeZone;
-use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName;
 use FeatureFlag\Access\Domain\ValueObject\UserId;
 use FeatureFlag\Access\Domain\ValueObject\UserRole;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
  * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
  * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
@@ -21,7 +20,8 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
- * @covers \FeatureFlag\Access\Domain\ValueObject\DateThreshold
+ * @covers \FeatureFlag\Access\Domain\ValueObject\StartsAt
+ * @covers \FeatureFlag\Access\Domain\ValueObject\EndsAt
  * @covers \FeatureFlag\Access\Domain\ValueObject\ModuloUserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  */
@@ -30,10 +30,10 @@ final class FeatureFlagConfigBuilderTest extends TestCase
     public static function scenarios(): array
     {
         return [
-            [false, null, null, null, null, null],
-            [true, ['wp.pl'], [1, 2], [3, 4], 5, ['date' => 'yesterday', 'timeZone' => 'Europe/Vatican']],
-            [false, null, [1, 2], null, null, ['date' => 'next monday', 'timeZone' => 'America/New_York']],
-            [true, ['yahoo.com', 'gmail.com'], null, [3, 4], null, null],
+            [false, null, null, null, null, null, null],
+            [true, ['wp.pl'], [1, 2], [3, 4], 5, 'yesterday', 'next monday'],
+            [false, null, [1, 2], null, null, 'next monday', 'next friday'],
+            [true, ['yahoo.com', 'gmail.com'], null, [3, 4], null, null, null],
         ];
     }
 
@@ -46,7 +46,8 @@ final class FeatureFlagConfigBuilderTest extends TestCase
         ?array $userIds,
         ?array $userRoles,
         ?int $moduloUserId,
-        ?array $dateThreshold,
+        ?string $startsAt,
+        ?string $endsAt,
     ): void {
         $config = FeatureFlagConfigBuilder::create()
             ->setForceGrantAccess($forceGrantAccess)
@@ -54,36 +55,32 @@ final class FeatureFlagConfigBuilderTest extends TestCase
             ->setUserIds($userIds)
             ->setUserRoles($userRoles)
             ->setModuloUserId($moduloUserId)
-            ->setDateThreshold($dateThreshold)
+            ->setStartsAt($startsAt)
+            ->setEndsAt($endsAt)
             ->build();
 
         $this->assertSame($forceGrantAccess, $config->forceGrantAccess);
-        $this->assertSame(
-            $userEmailDomainNames,
-            $config->userEmailDomainNames
-                ? array_map(static fn(UserEmailDomainName $name) => $name->value, $config->userEmailDomainNames->getCollection())
-                : null
+        $this->assertSame($userEmailDomainNames, $config->userEmailDomainNames
+            ? array_map(static fn(UserEmailDomainName $name) => $name->value, $config->userEmailDomainNames->getCollection())
+            : null
         );
-        $this->assertSame(
-            $userIds,
-            $config->userIds
-                ? array_map(static fn(UserId $id) => $id->value, $config->userIds->getCollection())
-                : null
+        $this->assertSame($userIds, $config->userIds
+            ? array_map(static fn(UserId $id) => $id->value, $config->userIds->getCollection())
+            : null
         );
-        $this->assertSame(
-            $userRoles,
-            $config->userRoles
-                ? array_map(static fn(UserRole $role) => $role->value, $config->userRoles->getCollection())
-                : null
+        $this->assertSame($userRoles, $config->userRoles
+            ? array_map(static fn(UserRole $role) => $role->value, $config->userRoles->getCollection())
+            : null
         );
         $this->assertSame($moduloUserId, $config->moduloUserId?->value);
 
-        $dateThreshold
-            ? $this->assertSame(
-            (new DateTimeImmutable($dateThreshold['date'], new DateTimeZone($dateThreshold['timeZone'])))->format('Y-m-d'),
-            $config->dateThreshold->value->format('Y-m-d')
-        )
-            : $this->assertNull($config->dateThreshold);
+        $startsAt
+            ? $this->assertSame((new DateTimeImmutable($startsAt))->format('Y-m-d H:i:s'), $config->startsAt->value->format('Y-m-d H:i:s'))
+            : $this->assertNull($config->startsAt);
+
+        $endsAt
+            ? $this->assertSame((new DateTimeImmutable($endsAt))->format('Y-m-d H:i:s'), $config->endsAt->value->format('Y-m-d H:i:s'))
+            : $this->assertNull($config->endsAt);
     }
 
     public function testBuildEmptyFeatureFlag(): void
@@ -95,7 +92,7 @@ final class FeatureFlagConfigBuilderTest extends TestCase
         $this->assertNull($config->userIds);
         $this->assertNull($config->userRoles);
         $this->assertNull($config->moduloUserId);
-        $this->assertNull($config->dateThreshold);
+        $this->assertNull($config->startsAt);
     }
 
     public function testSkipNullableForceGrantAccess(): void
@@ -103,12 +100,5 @@ final class FeatureFlagConfigBuilderTest extends TestCase
         $config = FeatureFlagConfigBuilder::create()->setForceGrantAccess(null)->build();
 
         $this->assertFalse($config->forceGrantAccess);
-    }
-
-    public function testSkipDateThresholdIfOneIngredientIsMissing(): void
-    {
-        $config = FeatureFlagConfigBuilder::create()->setDateThreshold(['timeZone' => 'Europe/Vatican'])->build();
-
-        $this->assertNull($config->dateThreshold->value);
     }
 }

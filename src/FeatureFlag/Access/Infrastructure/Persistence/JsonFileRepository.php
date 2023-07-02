@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Infrastructure\Persistence;
 
-use Exception;
 use FeatureFlag\Access\Application\FeatureFlagRepository;
-use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
-use FeatureFlag\Access\Domain\FeatureFlag;
+use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagAlreadyExistsException;
 use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException;
 use FeatureFlag\Access\Infrastructure\Exception\JsonFileNotFoundException;
 
-final class FeatureFlagJsonFileRepository implements FeatureFlagRepository
+final class JsonFileRepository implements FeatureFlagRepository
 {
     private array $featureFlags = [];
 
@@ -31,7 +30,8 @@ final class FeatureFlagJsonFileRepository implements FeatureFlagRepository
                 new FeatureFlagId($key),
                 FeatureFlagConfigBuilder::create()
                     ->setForceGrantAccess($config['forceGrantAccess'])
-                    ->setDateThreshold($config['dateThreshold'])
+                    ->setStartsAt($config['startsAt'])
+                    ->setEndsAt($config['endsAt'])
                     ->setUserEmailDomainNames($config['userEmailDomainNames'])
                     ->setUserIds($config['userIds'])
                     ->setUserRoles($config['userRoles'])
@@ -63,6 +63,7 @@ final class FeatureFlagJsonFileRepository implements FeatureFlagRepository
         }
 
         $this->featureFlags[$featureFlag->id->value] = $featureFlag;
+        $this->save();
 
         return $this;
     }
@@ -74,6 +75,7 @@ final class FeatureFlagJsonFileRepository implements FeatureFlagRepository
         }
 
         unset($this->featureFlags[$id->value]);
+        $this->save();
 
         return $this;
     }
@@ -85,18 +87,12 @@ final class FeatureFlagJsonFileRepository implements FeatureFlagRepository
         }
 
         $this->featureFlags[$id->value] = new FeatureFlag($id, $config);
+        $this->save();
 
         return $this;
     }
 
-    public function clean(): self
-    {
-        $this->featureFlags = [];
-
-        return $this;
-    }
-
-    public function save(): self
+    private function save(): void
     {
         /** @var FeatureFlag $featureFlag */
         foreach ($this->featureFlags as $featureFlag) {
@@ -104,7 +100,12 @@ final class FeatureFlagJsonFileRepository implements FeatureFlagRepository
         }
 
         file_put_contents($this->path, json_encode($featureFlags ?? []));
-
-        return $this;
+    }
+    
+    public function clean(): void
+    {
+        $this->featureFlags = [];
+        
+        $this->save();
     }
 }

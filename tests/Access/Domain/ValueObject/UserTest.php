@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Domain\ValueObject;
 
-use FeatureFlag\Access\Domain\User;
+use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\ValueObject\UserEmail;
 use FeatureFlag\Access\Domain\ValueObject\UserId;
 use FeatureFlag\Access\Domain\ValueObject\UserRole;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Domain\User
+ * @covers \FeatureFlag\Access\Domain\Entity\User
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmail

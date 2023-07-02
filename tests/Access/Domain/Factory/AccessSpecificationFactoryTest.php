@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Tests\Access\Domain\Factory;
 
 use DateTimeImmutable;
+use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory;
-use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
-use FeatureFlag\Access\Domain\FeatureFlag;
 use FeatureFlag\Access\Domain\Specification\AccessSpecification;
 use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain;
 use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo;
-use FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded;
+use FeatureFlag\Access\Domain\Specification\Predicates\IsEndsAtDateExceeded;
+use FeatureFlag\Access\Domain\Specification\Predicates\IsStartsAtDateExceeded;
 use FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable;
 use FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
@@ -22,22 +23,23 @@ use PHPUnit\Framework\TestCase;
  * @covers \FeatureFlag\Access\Domain\Specification\AccessSpecification
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo
- * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsDateThresholdExceeded
+ * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsStartsAtDateExceeded
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable
  * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
  * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
  * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
  * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
- * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
- * @covers \FeatureFlag\Access\Domain\FeatureFlag
- * @covers \FeatureFlag\Access\Domain\ValueObject\DateThreshold
+ * @covers \FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\Entity\FeatureFlag
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
  * @covers \FeatureFlag\Access\Domain\ValueObject\ModuloUserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
+ * @covers \FeatureFlag\Access\Domain\ValueObject\StartsAt
+ * @covers \FeatureFlag\Access\Domain\ValueObject\EndsAt
  */
 final class AccessSpecificationFactoryTest extends TestCase
 {
@@ -78,9 +80,11 @@ final class AccessSpecificationFactoryTest extends TestCase
     public function testCreateFullSpecification(): void
     {
         $expectedExpressions = [
+            IsStartsAtDateExceeded::class,
+            IsEndsAtDateExceeded::class,
             IsUserRoleAvailable::class,
             DoesUserIdSatisfyModulo::class,
-            IsDateThresholdExceeded::class,
+            IsStartsAtDateExceeded::class,
             IsUserIdAvailable::class,
             DoesUserEmailAddressIncludesDomain::class,
         ];
@@ -91,10 +95,8 @@ final class AccessSpecificationFactoryTest extends TestCase
                 ->setUserRoles([1, 4, 7])
                 ->setUserIds([1, 5, 7])
                 ->setUserEmailDomainNames(['gmail.com'])
-                ->setDateThreshold([
-                    'date' => (new DateTimeImmutable('tomorrow'))->format('Y-m-d'),
-                    'timeZone' => 'Europe/Warsaw',
-                ])
+                ->setStartsAt((new DateTimeImmutable('tomorrow'))->format('Y-m-d H:i:s'))
+                ->setEndsAt((new DateTimeImmutable('next monday'))->format('Y-m-d H:i:s'))
                 ->setModuloUserId(4)
                 ->setForceGrantAccess(false)
                 ->build()

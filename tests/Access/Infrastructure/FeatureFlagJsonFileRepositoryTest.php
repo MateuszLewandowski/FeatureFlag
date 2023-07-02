@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Infrastructure;
 
-use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
-use FeatureFlag\Access\Domain\FeatureFlag;
+use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagAlreadyExistsException;
 use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException;
 use FeatureFlag\Access\Infrastructure\Exception\JsonFileNotFoundException;
-use FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository;
+use FeatureFlag\Access\Infrastructure\Persistence\JsonFileRepository;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
- * @covers \FeatureFlag\Access\Infrastructure\Persistence\FeatureFlagJsonFileRepository
+ * @covers \FeatureFlag\Access\Infrastructure\Persistence\JsonFileRepository
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
- * @covers \FeatureFlag\Access\Domain\FeatureFlag
+ * @covers \FeatureFlag\Access\Domain\Entity\FeatureFlag
  * @covers \FeatureFlag\Access\Infrastructure\Exception\FeatureFlagAlreadyExistsException
  * @covers \FeatureFlag\Access\Infrastructure\Exception\JsonFileNotFoundException
  * @covers \FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException
- * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
  * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
+ * @covers \FeatureFlag\Access\Domain\ValueObject\StartsAt
+ * @covers \FeatureFlag\Access\Domain\ValueObject\EndsAt
  */
 final class FeatureFlagJsonFileRepositoryTest extends TestCase
 {
@@ -33,10 +35,9 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
 
     public function testTogglesJsonFileExists(): void
     {
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
 
         $featureToggles = $repository->getFeatureFlags();
-
         $this->assertIsArray($featureToggles);
         $this->assertEmpty($featureToggles);
     }
@@ -45,39 +46,44 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
     {
         $this->expectException(JsonFileNotFoundException::class);
 
-        new FeatureFlagJsonFileRepository('invalid/path/to/file.json');
+        new JsonFileRepository('invalid/path/to/file.json');
     }
 
     public function testGetNonExistingKey(): void
     {
         $this->expectException(RuntimeException::class);
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
-
+        $repository = new JsonFileRepository(self::PATH);
         $repository->get(new FeatureFlagId('non-existing key'));
     }
 
     public function testSetWhenFeatureFlagAlreadyExists(): void
     {
         $this->expectException(FeatureFlagAlreadyExistsException::class);
+        
         $featureFlag = new FeatureFlag(
             new FeatureFlagId('Key52'),
             FeatureFlagConfigBuilder::create()->build()
         );
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
-        $repository->set($featureFlag);
-        $repository->set($featureFlag);
+        $repository = new JsonFileRepository(self::PATH);
+        try {
+            $repository->set($featureFlag);
+            $repository->set($featureFlag);
+        } catch (FeatureFlagAlreadyExistsException $e) {
+            $repository->clean();
+            throw $e;
+        }
     }
 
     public function testSetFeatureFlagAndStoreAsInMemoryArray(): void
     {
         $featureFlag = new FeatureFlag(
-            new FeatureFlagId('Key52'),
+            new FeatureFlagId('Key55'),
             FeatureFlagConfigBuilder::create()->build()
         );
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
 
         $repository->set($featureFlag);
         $newFeatureToggles = $repository->getFeatureFlags();
@@ -94,18 +100,18 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
             FeatureFlagConfigBuilder::create()->build()
         );
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
 
-        $repository->set($featureFlag)->save();
+        $repository->set($featureFlag);
         $featureFlags = $repository->getFeatureFlags();
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
 
         $newFeatureFlags = $repository->getFeatureFlags();
 
         $this->assertEquals($featureFlags, $newFeatureFlags);
 
-        $repository->clean()->save();
+        $repository->clean();
     }
 
     public function testGet(): void
@@ -115,7 +121,7 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
             FeatureFlagConfigBuilder::create()->build()
         );
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
 
         $repository->set($featureFlag);
         $restoredFeatureFlag = $repository->get($featureFlag->id);
@@ -133,7 +139,7 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
 
         $featureFlag = new FeatureFlag($featureFlagId, $featureFlagConfig);
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
         $repository->set($featureFlag);
 
         $newFeatureFlagConfig = FeatureFlagConfigBuilder::create()
@@ -155,7 +161,7 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
             FeatureFlagConfigBuilder::create()->build()
         );
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
         $repository->set($featureFlag);
         $featureFlag = $repository->get($featureFlag->id);
         $repository->delete($featureFlag->id);
@@ -169,7 +175,7 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
     {
         $this->expectException(FeatureFlagNotFoundException::class);
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
         $repository->delete(new FeatureFlagId('NotExistsDeleteFlag'));
     }
 
@@ -177,7 +183,7 @@ final class FeatureFlagJsonFileRepositoryTest extends TestCase
     {
         $this->expectException(FeatureFlagNotFoundException::class);
 
-        $repository = new FeatureFlagJsonFileRepository(self::PATH);
+        $repository = new JsonFileRepository(self::PATH);
         $repository->update(
             new FeatureFlagId('NotExistsDeleteFlag'),
             FeatureFlagConfigBuilder::create()->build()

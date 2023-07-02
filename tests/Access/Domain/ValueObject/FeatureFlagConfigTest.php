@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Access\Domain\ValueObject;
 
 use DateTimeImmutable;
-use DateTimeZone;
-use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder;
-use FeatureFlag\Access\Domain\ValueObject\DateThreshold;
-use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
+use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigFactory;
+use FeatureFlag\Access\Domain\ValueObject\EndsAt;
 use FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName;
 use FeatureFlag\Access\Domain\ValueObject\UserId;
 use FeatureFlag\Access\Domain\ValueObject\UserRole;
@@ -16,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\ValueObject\ModuloUserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
@@ -25,8 +24,10 @@ use Symfony\Component\HttpFoundation\Request;
  * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
  * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
  * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
- * @covers \FeatureFlag\Access\Domain\ValueObject\DateThreshold
+ * @covers \FeatureFlag\Access\Domain\ValueObject\StartsAt
+ * @covers \FeatureFlag\Access\Domain\ValueObject\EndsAt
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
+ * @covers \FeatureFlag\Access\Domain\Factory\FeatureFlagConfigFactory
  */
 final class FeatureFlagConfigTest extends TestCase
 {
@@ -36,10 +37,7 @@ final class FeatureFlagConfigTest extends TestCase
             [
                 [
                     'forceGrantAccess' => false,
-                    'dateThreshold' => [
-                        'date' => 'midnight',
-                        'timeZone' => 'Europe/Warsaw',
-                    ],
+                    'startsAt' => 'midnight',
                     'userRoles' => [1, 2],
                     'moduloUserId' => 2,
                     'userEmailDomainNames' => ['gmail.com'],
@@ -49,7 +47,7 @@ final class FeatureFlagConfigTest extends TestCase
             [
                 [
                     'forceGrantAccess' => true,
-                    'dateThreshold' => null,
+                    'startsAt' => null,
                     'userRoles' => null,
                     'moduloUserId' => null,
                     'userEmailDomainNames' => null,
@@ -75,7 +73,7 @@ final class FeatureFlagConfigTest extends TestCase
     {
         $config = FeatureFlagConfigBuilder::create()
             ->setForceGrantAccess($payload['forceGrantAccess'] ?? false)
-            ->setDateThreshold($payload['dateThreshold'] ?? null)
+            ->setStartsAt($payload['startsAt'] ?? null)
             ->setUserEmailDomainNames($payload['userEmailDomainNames'] ?? null)
             ->setUserIds($payload['userIds'] ?? null)
             ->setUserRoles($payload['userRoles'] ?? null)
@@ -84,12 +82,12 @@ final class FeatureFlagConfigTest extends TestCase
 
         $this->assertSame($payload['forceGrantAccess'], $config->forceGrantAccess);
         $this->assertSame(
-            $payload['dateThreshold']
-                ? (new DateThreshold(
-                new DateTimeImmutable($payload['dateThreshold']['date'], new DateTimeZone($payload['dateThreshold']['timeZone']))
-            ))->value->format('Y-m-d')
+            $payload['startsAt']
+                ? (new EndsAt(
+                new DateTimeImmutable($payload['startsAt'])
+            ))->value->format('Y-m-d H:i:s')
                 : null,
-            $config->dateThreshold?->value->format('Y-m-d')
+            $config->startsAt?->value->format('Y-m-d H:i:s')
         );
         $this->assertSame($payload['moduloUserId'], $config->moduloUserId?->value);
         $this->assertSame(
@@ -117,7 +115,7 @@ final class FeatureFlagConfigTest extends TestCase
     {
         $moduloUserId = 10;
 
-        $featureFlagConfig = FeatureFlagConfig::createWithRequest(
+        $featureFlagConfig = FeatureFlagConfigFactory::createWithRequest(
             new Request([], ['moduloUserId' => $moduloUserId])
         );
 

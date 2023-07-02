@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Factory;
+namespace FeatureFlag\Access\Domain\Builder;
 
-use FeatureFlag\Access\Domain\User;
+use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\ValueObject\UserEmail;
 use FeatureFlag\Access\Domain\ValueObject\UserId;
 use FeatureFlag\Access\Domain\ValueObject\UserRole;

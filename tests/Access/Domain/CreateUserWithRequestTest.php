@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Domain;
 
-use FeatureFlag\Access\Domain\User;
+use FeatureFlag\Access\Domain\Factory\UserFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @covers \FeatureFlag\Access\Domain\User
- * @covers \FeatureFlag\Access\Domain\Factory\UserBuilder
+ * @covers \FeatureFlag\Access\Domain\Entity\User
+ * @covers \FeatureFlag\Access\Domain\Builder\UserBuilder
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmail
+ * @covers \FeatureFlag\Access\Domain\Factory\UserFactory
  */
 final class CreateUserWithRequestTest extends TestCase
 {
@@ -25,7 +26,7 @@ final class CreateUserWithRequestTest extends TestCase
             'userEmail' => 'user@gmail.com',
         ]);
 
-        $user = User::createWithRequest($request);
+        $user = UserFactory::createWithRequest($request);
 
         $this->assertSame(1, $user->id->value);
         $this->assertSame(2, $user->role->value);

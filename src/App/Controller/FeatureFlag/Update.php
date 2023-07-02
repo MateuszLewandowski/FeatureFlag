@@ -7,6 +7,7 @@ namespace App\Controller\FeatureFlag;
 use App\Core\Validation\ResponseCodeValidator;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
 use FeatureFlag\Access\Application\FeatureFlagRepository;
+use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigFactory;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;
@@ -33,8 +34,8 @@ final class Update extends AbstractController
             $responseStatus = Response::HTTP_NO_CONTENT;
             $this->repository->update(
                 new FeatureFlagId($request->get('featureFlagId')),
-                FeatureFlagConfig::createWithRequest($request)
-            )->save();
+                FeatureFlagConfigFactory::createWithRequest($request)
+            );
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

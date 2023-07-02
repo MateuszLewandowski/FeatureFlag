@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Infrastructure\Exception;
 
-use FeatureFlag\Access\Domain\FeatureFlag;
+use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
