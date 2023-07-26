@@ -21,7 +21,7 @@ final class FeatureFlagConfigFactory
             ->setUserEmailDomainNames(json_decode($request->request->getString('userEmailDomainNames', '[]'), true))
             ->setUserIds(json_decode($request->request->getString('userIds', '[]'), true))
             ->setUserRoles(json_decode($request->request->getString('userRoles', '[]'), true))
-            ->setModuloUserId($request->request->getInt('moduloUserId') ?? null)
+            ->setModuloUserId($request->get('moduloUserId') ?? null)
             ->build();
     }
 
