@@ -23,13 +23,13 @@ class FeatureFlag
     private ?DateTimeImmutable $ends_at = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $user_email_domain_names = [];
+    private ?array $user_email_domain_names = [];
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $user_ids = [];
+    private ?array $user_ids = [];
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $user_roles = [];
+    private ?array $user_roles = [];
 
     #[ORM\Column(nullable: true)]
     private ?int $modulo_user_id = null;
@@ -88,7 +88,7 @@ class FeatureFlag
         return $this;
     }
 
-    public function getUserEmailDomainNames(): array
+    public function getUserEmailDomainNames(): ?array
     {
         return $this->user_email_domain_names;
     }
@@ -100,7 +100,7 @@ class FeatureFlag
         return $this;
     }
 
-    public function getUserIds(): array
+    public function getUserIds(): ?array
     {
         return $this->user_ids;
     }
@@ -148,7 +148,7 @@ class FeatureFlag
         return $this;
     }
 
-    public function getUserRoles(): array
+    public function getUserRoles(): ?array
     {
         return $this->user_roles;
     }

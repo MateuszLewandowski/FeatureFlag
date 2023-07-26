@@ -16,10 +16,10 @@ final class FeatureFlagDTOFactory
             $featureFlag->config->forceGrantAccess,
             $featureFlag->config->startsAt?->value?->format('Y-m-d h:i:s'),
             $featureFlag->config->endsAt?->value?->format('Y-m-d h:i:s'),
-            $featureFlag->config->userEmailDomainNames->toArray(),
-            $featureFlag->config->userIds->toArray(),
-            $featureFlag->config->userRoles->toArray(),
-            $featureFlag->config->moduloUserId->value,
+            $featureFlag->config->userEmailDomainNames?->toArray(),
+            $featureFlag->config->userIds?->toArray(),
+            $featureFlag->config->userRoles?->toArray(),
+            $featureFlag->config->moduloUserId?->value,
         );
     }
 }
