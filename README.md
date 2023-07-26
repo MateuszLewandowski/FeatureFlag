@@ -12,9 +12,8 @@ Standalone application for features access managing.
     bool        forceGrantAccess        true
     string      startsAt                2024-01-01 10:00:00
     string      endsAt                  2025-01-01 12:00:00
-    string[]    dateThreshold           [date => '2023-06-01', timeZone => 'Europe/Warsaw']
     string[]    userEmailDomainNames    ['gmail@com', 'wp.pl']
-    int[]       userIds                 [1, 100, 1001]    
+    int[]       userIds                 [1, 100, 1001]
     int[]       userRoles               [1, 4, 7]
     int         moduloUserId            5 
 
