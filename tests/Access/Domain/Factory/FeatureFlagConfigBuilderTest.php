@@ -32,7 +32,7 @@ final class FeatureFlagConfigBuilderTest extends TestCase
         return [
             [false, null, null, null, null, null, null],
             [true, ['wp.pl'], [1, 2], [3, 4], 5, 'yesterday', 'next monday'],
-            [false, null, [1, 2], null, null, 'next monday', 'next friday'],
+            [false, null, [1, 2], null, null, 'next monday', 'next friday +1 week'],
             [true, ['yahoo.com', 'gmail.com'], null, [3, 4], null, null, null],
         ];
     }
@@ -49,15 +49,15 @@ final class FeatureFlagConfigBuilderTest extends TestCase
         ?string $startsAt,
         ?string $endsAt,
     ): void {
-        $config = FeatureFlagConfigBuilder::create()
-            ->setForceGrantAccess($forceGrantAccess)
-            ->setUserEmailDomainNames($userEmailDomainNames)
-            ->setUserIds($userIds)
-            ->setUserRoles($userRoles)
-            ->setModuloUserId($moduloUserId)
-            ->setStartsAt($startsAt)
-            ->setEndsAt($endsAt)
-            ->build();
+            $config = FeatureFlagConfigBuilder::create()
+                ->setForceGrantAccess($forceGrantAccess)
+                ->setUserEmailDomainNames($userEmailDomainNames)
+                ->setUserIds($userIds)
+                ->setUserRoles($userRoles)
+                ->setModuloUserId($moduloUserId)
+                ->setStartsAt($startsAt)
+                ->setEndsAt($endsAt)
+                ->build();
 
         $this->assertSame($forceGrantAccess, $config->forceGrantAccess);
         $this->assertSame(
