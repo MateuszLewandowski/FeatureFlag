@@ -5,7 +5,9 @@ Standalone application for features access managing.
 ## Install
 
 > git clone <br>
-> app:install-json-database
+> app:install-json-database <br>
+> docker-compose up <br>
+> symfony server:start <br>
 
 ## Available rules
 
