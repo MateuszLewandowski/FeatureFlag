@@ -6,9 +6,9 @@ namespace App\Controller\FeatureFlag;
 
 use App\Core\Validation\ResponseCodeValidator;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
+use FeatureFlag\Access\Application\Factory\FeatureFlagConfigFactory;
 use FeatureFlag\Access\Application\FeatureFlagRepository;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
-use FeatureFlag\Access\Domain\Factory\FeatureFlagConfigFactory;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

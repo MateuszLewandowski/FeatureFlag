@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Access\Application;
 
 use DateTimeImmutable;
+use FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Application\Builder\UserBuilder;
 use FeatureFlag\Access\Application\FeatureFlagRepository;
 use FeatureFlag\Access\Application\VerifyAccessRules;
-use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
-use FeatureFlag\Access\Domain\Builder\UserBuilder;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
@@ -19,8 +19,8 @@ use Throwable;
 /**
  * @covers \FeatureFlag\Access\Application\VerifyAccessRules
  * @covers \FeatureFlag\Access\Infrastructure\Persistence\JsonFileRepository
- * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
- * @covers \FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory
+ * @covers \FeatureFlag\Access\Application\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Application\Factory\AccessSpecificationFactory
  * @covers \FeatureFlag\Access\Domain\Specification\AccessSpecification
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsStartsAtDateExceeded
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsEndsAtDateExceeded

@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace App\Tests\Access\Domain\Factory;
 
 use DateTimeImmutable;
-use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName;
 use FeatureFlag\Access\Domain\ValueObject\UserId;
 use FeatureFlag\Access\Domain\ValueObject\UserRole;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
- * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
- * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
- * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Application\Collection\UserEmailDomainNameCollection
+ * @covers \FeatureFlag\Access\Application\Collection\UserRoleCollection
+ * @covers \FeatureFlag\Access\Application\Collection\ValueObjectCollection
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
- * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
+ * @covers \FeatureFlag\Access\Application\Collection\UserIdCollection
  * @covers \FeatureFlag\Access\Domain\ValueObject\StartsAt
  * @covers \FeatureFlag\Access\Domain\ValueObject\EndsAt
  * @covers \FeatureFlag\Access\Domain\ValueObject\ModuloUserId

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Domain\Factory;
 
-use FeatureFlag\Access\Domain\Builder\UserBuilder;
+use FeatureFlag\Access\Application\Builder\UserBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Domain\Builder\UserBuilder
+ * @covers \FeatureFlag\Access\Application\Builder\UserBuilder
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmail

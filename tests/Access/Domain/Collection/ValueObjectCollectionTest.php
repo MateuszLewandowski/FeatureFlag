@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Domain\Collection;
 
-use FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection;
-use FeatureFlag\Access\Domain\Collection\UserIdCollection;
-use FeatureFlag\Access\Domain\Collection\UserRoleCollection;
+use FeatureFlag\Access\Application\Collection\UserEmailDomainNameCollection;
+use FeatureFlag\Access\Application\Collection\UserIdCollection;
+use FeatureFlag\Access\Application\Collection\UserRoleCollection;
 use FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName;
 use FeatureFlag\Access\Domain\ValueObject\UserId;
 use FeatureFlag\Access\Domain\ValueObject\UserRole;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
+ * @covers \FeatureFlag\Access\Application\Collection\UserIdCollection
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
- * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
- * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
+ * @covers \FeatureFlag\Access\Application\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Application\Collection\UserRoleCollection
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserRole
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName
- * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
+ * @covers \FeatureFlag\Access\Application\Collection\UserEmailDomainNameCollection
  */
 final class ValueObjectCollectionTest extends TestCase
 {

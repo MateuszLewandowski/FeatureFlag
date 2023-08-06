@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Infrastructure;
 
-use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagAlreadyExistsException;
@@ -22,9 +22,9 @@ use RuntimeException;
  * @covers \FeatureFlag\Access\Infrastructure\Exception\FeatureFlagAlreadyExistsException
  * @covers \FeatureFlag\Access\Infrastructure\Exception\JsonFileNotFoundException
  * @covers \FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException
- * @covers \FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder
- * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
- * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Application\Collection\UserIdCollection
+ * @covers \FeatureFlag\Access\Application\Collection\ValueObjectCollection
  * @covers \FeatureFlag\Access\Domain\ValueObject\UserId
  * @covers \FeatureFlag\Access\Domain\ValueObject\StartsAt
  * @covers \FeatureFlag\Access\Domain\ValueObject\EndsAt

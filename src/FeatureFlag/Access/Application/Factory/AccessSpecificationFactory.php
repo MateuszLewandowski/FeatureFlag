@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Factory;
+namespace FeatureFlag\Access\Application\Factory;
 
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\Specification\AccessSpecification;

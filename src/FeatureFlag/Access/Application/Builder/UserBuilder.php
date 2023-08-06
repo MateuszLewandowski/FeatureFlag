@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Builder;
+namespace FeatureFlag\Access\Application\Builder;
 
 use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\ValueObject\UserEmail;

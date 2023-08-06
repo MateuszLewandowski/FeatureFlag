@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Access\Application\Specification;
 
-use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\Entity\User;
 use FeatureFlag\Access\Domain\Exception\UserEmailNotFoundException;
@@ -15,9 +15,9 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
- * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
- * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
- * @covers \FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Application\Collection\UserEmailDomainNameCollection
+ * @covers \FeatureFlag\Access\Application\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\Entity\FeatureFlag
  * @covers \FeatureFlag\Access\Domain\Entity\User
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig

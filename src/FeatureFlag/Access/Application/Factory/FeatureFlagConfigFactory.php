@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Factory;
+namespace FeatureFlag\Access\Application\Factory;
 
 use App\Entity\FeatureFlag as Entity;
-use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use Shared\Domain\DateTimeSerializable;
 use Symfony\Component\HttpFoundation\Request;

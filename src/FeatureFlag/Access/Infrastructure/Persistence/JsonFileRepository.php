@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Infrastructure\Persistence;
 
+use FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Application\FeatureFlagRepository;
-use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;

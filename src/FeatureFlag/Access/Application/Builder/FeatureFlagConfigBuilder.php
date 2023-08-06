@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Builder;
+namespace FeatureFlag\Access\Application\Builder;
 
 use DateTimeImmutable;
-use FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection;
-use FeatureFlag\Access\Domain\Collection\UserIdCollection;
-use FeatureFlag\Access\Domain\Collection\UserRoleCollection;
+use FeatureFlag\Access\Application\Collection\UserEmailDomainNameCollection;
+use FeatureFlag\Access\Application\Collection\UserIdCollection;
+use FeatureFlag\Access\Application\Collection\UserRoleCollection;
 use FeatureFlag\Access\Domain\ValueObject\EndsAt;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use FeatureFlag\Access\Domain\ValueObject\ModuloUserId;

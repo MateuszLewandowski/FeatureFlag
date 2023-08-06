@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Collection;
+namespace FeatureFlag\Access\Application\Collection;
 
 use FeatureFlag\Access\Domain\ValueObject\UserEmailDomainName;
 

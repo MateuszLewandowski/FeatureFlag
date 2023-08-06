@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Access\Domain\Factory;
 
 use DateTimeImmutable;
-use FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder;
+use FeatureFlag\Access\Application\Factory\AccessSpecificationFactory;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
-use FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory;
 use FeatureFlag\Access\Domain\Specification\AccessSpecification;
 use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain;
 use FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo;
@@ -19,18 +19,18 @@ use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FeatureFlag\Access\Domain\Factory\AccessSpecificationFactory
+ * @covers \FeatureFlag\Access\Application\Factory\AccessSpecificationFactory
  * @covers \FeatureFlag\Access\Domain\Specification\AccessSpecification
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserEmailAddressIncludesDomain
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\DoesUserIdSatisfyModulo
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsStartsAtDateExceeded
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserRoleAvailable
  * @covers \FeatureFlag\Access\Domain\Specification\Predicates\IsUserIdAvailable
- * @covers \FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection
- * @covers \FeatureFlag\Access\Domain\Collection\UserIdCollection
- * @covers \FeatureFlag\Access\Domain\Collection\UserRoleCollection
- * @covers \FeatureFlag\Access\Domain\Collection\ValueObjectCollection
- * @covers \FeatureFlag\Access\Domain\Builder\FeatureFlagConfigBuilder
+ * @covers \FeatureFlag\Access\Application\Collection\UserEmailDomainNameCollection
+ * @covers \FeatureFlag\Access\Application\Collection\UserIdCollection
+ * @covers \FeatureFlag\Access\Application\Collection\UserRoleCollection
+ * @covers \FeatureFlag\Access\Application\Collection\ValueObjectCollection
+ * @covers \FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder
  * @covers \FeatureFlag\Access\Domain\Entity\FeatureFlag
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig
  * @covers \FeatureFlag\Access\Domain\ValueObject\FeatureFlagId

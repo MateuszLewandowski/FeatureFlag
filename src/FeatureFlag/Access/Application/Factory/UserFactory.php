@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Factory;
+namespace FeatureFlag\Access\Application\Factory;
 
-use FeatureFlag\Access\Domain\Builder\UserBuilder;
+use FeatureFlag\Access\Application\Builder\UserBuilder;
 use FeatureFlag\Access\Domain\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 
