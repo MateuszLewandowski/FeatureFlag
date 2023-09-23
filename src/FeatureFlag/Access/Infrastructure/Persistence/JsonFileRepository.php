@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace FeatureFlag\Access\Infrastructure\Persistence;
 
 use FeatureFlag\Access\Application\Builder\FeatureFlagConfigBuilder;
-use FeatureFlag\Access\Application\FeatureFlagRepository;
+use FeatureFlag\Access\Application\ReadableRepository;
+use FeatureFlag\Access\Application\SettableRepository;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
@@ -13,7 +14,7 @@ use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagAlreadyExistsExceptio
 use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException;
 use FeatureFlag\Access\Infrastructure\Exception\JsonFileNotFoundException;
 
-final class JsonFileRepository implements FeatureFlagRepository
+final class JsonFileRepository implements ReadableRepository, SettableRepository
 {
     private array $featureFlags = [];
 
@@ -23,9 +24,7 @@ final class JsonFileRepository implements FeatureFlagRepository
             throw new JsonFileNotFoundException();
         }
 
-        $featureFlags = json_decode(file_get_contents($path), true) ?? [];
-
-        foreach ($featureFlags as $key => $config) {
+        foreach (json_decode(file_get_contents($path), true) ?? [] as $key => $config) {
             $this->featureFlags[$key] = new FeatureFlag(
                 new FeatureFlagId($key),
                 FeatureFlagConfigBuilder::create()

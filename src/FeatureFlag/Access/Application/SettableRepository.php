@@ -8,13 +8,8 @@ use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 
-interface FeatureFlagRepository
+interface SettableRepository
 {
-    /** @return FeatureFlag[] */
-    public function getFeatureFlags(): array;
-
-    public function get(FeatureFlagId $id): FeatureFlag;
-
     public function set(FeatureFlag $featureFlag): self;
 
     public function delete(FeatureFlagId $id): self;

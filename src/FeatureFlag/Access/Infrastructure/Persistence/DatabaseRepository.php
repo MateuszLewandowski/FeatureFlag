@@ -10,7 +10,8 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use FeatureFlag\Access\Application\Factory\FeatureFlagConfigFactory;
-use FeatureFlag\Access\Application\FeatureFlagRepository;
+use FeatureFlag\Access\Application\ReadableRepository;
+use FeatureFlag\Access\Application\SettableRepository;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagConfig;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
@@ -19,7 +20,7 @@ use FeatureFlag\Access\Infrastructure\Exception\FeatureFlagNotFoundException;
 use FeatureFlag\Access\Infrastructure\Exception\PersistenceRuntimeException;
 use Throwable;
 
-final class DatabaseRepository extends ServiceEntityRepository implements FeatureFlagRepository
+final class DatabaseRepository extends ServiceEntityRepository implements ReadableRepository, SettableRepository
 {
     private readonly Connection $connection;
 
@@ -29,6 +30,7 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
         $this->connection = $this->getEntityManager()->getConnection();
     }
 
+    /** @return FeatureFlag[] */
     public function getFeatureFlags(): array
     {
         $featureFlagsEntities = $this->findAll();
@@ -60,7 +62,7 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
         );
     }
 
-    public function set(FeatureFlag $featureFlag): FeatureFlagRepository
+    public function set(FeatureFlag $featureFlag): self
     {
         $doesFeatureFlagExists = $this->count([
             'id' => $featureFlag->id->value,
@@ -80,7 +82,7 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
                 SQL
             );
 
-            $timestamp = date('Y-m-d h:i:s');
+            $timestamp = date('Y-m-d H:i:s');
 
             $stmt->executeStatement(
                 array_merge([
@@ -96,7 +98,7 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
         return $this;
     }
 
-    public function delete(FeatureFlagId $id): FeatureFlagRepository
+    public function delete(FeatureFlagId $id): self
     {
         try {
             $stmt = $this->connection->prepare(
@@ -115,7 +117,7 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
         return $this;
     }
 
-    public function update(FeatureFlagId $id, FeatureFlagConfig $config): FeatureFlagRepository
+    public function update(FeatureFlagId $id, FeatureFlagConfig $config): self
     {
         try {
             $stmt = $this->connection->prepare(
@@ -140,7 +142,7 @@ final class DatabaseRepository extends ServiceEntityRepository implements Featur
             $stmt->executeStatement(
                 array_merge([
                     'id' => $id->value,
-                    'updated_at' => date('Y-m-d h:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 ], $config->databaseSerialize())
             );
         } catch (Throwable $e) {
