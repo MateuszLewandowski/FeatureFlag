@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FeatureFlag\Access\Domain\Exception;
+namespace FeatureFlag\Access\Application\Exception;
 
 use FeatureFlag\Access\Domain\Specification\Predicates\Expressible;
 use RuntimeException;
