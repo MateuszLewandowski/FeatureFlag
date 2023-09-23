@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\FeatureFlag;
 
 use App\Core\Validation\ResponseCodeValidator;
+use App\Service\FeatureFlag\UpdateService;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
 use FeatureFlag\Access\Application\Factory\FeatureFlagConfigFactory;
-use FeatureFlag\Access\Application\FeatureFlagRepository;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +22,7 @@ use Throwable;
 final class Update extends AbstractController
 {
     public function __construct(
-        private readonly FeatureFlagRepository $repository,
+        private readonly UpdateService $service,
         private readonly LoggerInterface $logger,
     ) {}
 
@@ -31,10 +31,9 @@ final class Update extends AbstractController
     {
         try {
             $responseStatus = Response::HTTP_NO_CONTENT;
-            $this->repository->update(
-                new FeatureFlagId($request->get('featureFlagId')),
-                FeatureFlagConfigFactory::createWithRequest($request)
-            );
+            $featureFlagId = new FeatureFlagId($request->get('featureFlagId'));
+            $featureFlagConfig = FeatureFlagConfigFactory::createWithRequest($request);
+            $this->service->update($featureFlagId, $featureFlagConfig);
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

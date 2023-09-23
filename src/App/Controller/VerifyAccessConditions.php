@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Core\Validation\ResponseCodeValidator;
+use App\Service\VerifyAccessConditionsService;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
 use FeatureFlag\Access\Application\DTO\VerifierResultDTO;
 use FeatureFlag\Access\Application\Factory\UserFactory;
-use FeatureFlag\Access\Application\VerifyAccessRules;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +23,7 @@ use Throwable;
 final class VerifyAccessConditions extends AbstractController
 {
     public function __construct(
-        private readonly VerifyAccessRules $verifier,
+        private readonly VerifyAccessConditionsService $service,
         private readonly LoggerInterface $logger
     ) {}
 
@@ -31,10 +31,10 @@ final class VerifyAccessConditions extends AbstractController
     public function __invoke(Request $request): Response
     {
         try {
-            $featureFlagName = new FeatureFlagId($request->get('featureFlagId'));
+            $featureFlagId = new FeatureFlagId($request->get('featureFlagId'));
             $user = UserFactory::createWithRequest($request);
 
-            $isAvailable = $this->verifier->verify($featureFlagName, $user);
+            $isAvailable = $this->service->isFeatureAvailable($featureFlagId, $user);
 
             $responseStatus = $isAvailable
                 ? Response::HTTP_OK

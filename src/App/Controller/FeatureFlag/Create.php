@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\FeatureFlag;
 
 use App\Core\Validation\ResponseCodeValidator;
+use App\Service\FeatureFlag\CreateService;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
 use FeatureFlag\Access\Application\Factory\FeatureFlagConfigFactory;
-use FeatureFlag\Access\Application\FeatureFlagRepository;
 use FeatureFlag\Access\Domain\Entity\FeatureFlag;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;
@@ -23,7 +23,7 @@ use Throwable;
 final class Create extends AbstractController
 {
     public function __construct(
-        private readonly FeatureFlagRepository $repository,
+        private readonly CreateService $service,
         private readonly LoggerInterface $logger,
     ) {}
 
@@ -32,12 +32,10 @@ final class Create extends AbstractController
     {
         try {
             $responseStatus = Response::HTTP_CREATED;
-            $this->repository->set(
-                new FeatureFlag(
-                    new FeatureFlagId($request->request->getString('featureFlagId')),
-                    FeatureFlagConfigFactory::createWithRequest($request)
-                )
-            );
+            $featureFlagId = new FeatureFlagId($request->get('featureFlagId'));
+            $featureFlagConfig = FeatureFlagConfigFactory::createWithRequest($request);
+            $featureFlag = new FeatureFlag($featureFlagId, $featureFlagConfig);
+            $this->service->create($featureFlag);
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());
