@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Domain\ValueObject;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserRoleException;
+use FeatureFlag\Access\Application\Exception\InvalidUserRoleException;
 use Shared\ValueObject;
 
 final class UserRole implements ValueObject

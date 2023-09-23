@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Domain\ValueObject;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserEmailException;
+use FeatureFlag\Access\Application\Exception\InvalidUserEmailException;
 use Shared\ValueObject;
 
 final class UserEmail implements ValueObject
