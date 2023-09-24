@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\FeatureFlag;
 
 use App\Core\Validation\ResponseCodeValidator;
+use App\Service\FeatureFlag\DeleteService;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
-use FeatureFlag\Access\Application\FeatureFlagRepository;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +21,7 @@ use Throwable;
 final class Delete extends AbstractController
 {
     public function __construct(
-        private readonly FeatureFlagRepository $repository,
+        private readonly DeleteService $service,
         private readonly LoggerInterface $logger,
     ) {}
 
@@ -30,9 +30,8 @@ final class Delete extends AbstractController
     {
         try {
             $responseStatus = Response::HTTP_NO_CONTENT;
-            $this->repository->delete(
-                new FeatureFlagId($request->get('featureFlagId'))
-            );
+            $featureFlagId = new FeatureFlagId($request->get('featureFlagId'));
+            $this->service->delete($featureFlagId);
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

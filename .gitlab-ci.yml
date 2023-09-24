@@ -1,0 +1,43 @@
+variables:
+  FF_USE_FASTZIP: 'true'
+  ARTIFACT_COMPRESSION_LEVEL: 'fast'
+  CACHE_COMPRESSION_LEVEL: 'fast'
+
+stages:
+  - security
+  - unit
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
+
+security:
+  stage: security
+  script:
+    - local-php-security-checker
+  allow_failure: true
+  cache: {}
+
+.before_script:
+  before_script:
+    - '[[ -d vendor ]] || composer install --ignore-platform-reqs'
+
+unit:
+  before_script:
+    - composer install --ignore-platform-reqs
+  extends: .before_script
+  stage: unit
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  artifacts:
+    name: unit
+    when: always
+    paths:
+      - phpunit-junit-report.xml
+      - .phpunit.result.cache
+      - coverage-cobertura.xml
+    reports:
+      junit: phpunit-junit-report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage-cobertura.xml

@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\FeatureFlag;
 
 use App\Core\Validation\ResponseCodeValidator;
+use App\Service\FeatureFlag\FindAllService;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
-use FeatureFlag\Access\Application\FeatureFlagRepository;
 use Psr\Log\LoggerInterface;
-use Shared\Application\Factory\FeatureFlagDTOFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,7 @@ use Throwable;
 final class FindAll extends AbstractController
 {
     public function __construct(
-        private readonly FeatureFlagRepository $repository,
+        private readonly FindAllService $service,
         private readonly LoggerInterface $logger,
     ) {}
 
@@ -29,12 +28,8 @@ final class FindAll extends AbstractController
     public function __invoke(Request $request): Response
     {
         try {
-            $featureFlagsDTO = [];
-            foreach ($this->repository->getFeatureFlags() as $featureFlag) {
-                $featureFlagsDTO[] = FeatureFlagDTOFactory::create($featureFlag);
-            }
-            $responseContent = $featureFlagsDTO;
-            $responseStatus = count($featureFlagsDTO)
+            $responseContent = $this->service->findAll();
+            $responseStatus = count($responseContent)
                 ? Response::HTTP_OK
                 : Response::HTTP_NOT_FOUND;
         } catch (Throwable $e) {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Domain\ValueObject;
 
-use FeatureFlag\Access\Domain\Exception\InvalidUserIdException;
+use FeatureFlag\Access\Application\Exception\InvalidUserIdException;
 use Shared\ValueObject;
 
 final class UserId implements ValueObject

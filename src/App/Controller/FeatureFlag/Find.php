@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\FeatureFlag;
 
 use App\Core\Validation\ResponseCodeValidator;
+use App\Service\FeatureFlag\FindService;
 use FeatureFlag\Access\Application\DTO\ExceptionResponseDTO;
-use FeatureFlag\Access\Application\FeatureFlagRepository;
 use FeatureFlag\Access\Domain\ValueObject\FeatureFlagId;
 use Psr\Log\LoggerInterface;
-use Shared\Application\Factory\FeatureFlagDTOFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +21,7 @@ use Throwable;
 final class Find extends AbstractController
 {
     public function __construct(
-        private readonly FeatureFlagRepository $repository,
+        private readonly FindService $service,
         private readonly LoggerInterface $logger,
     ) {}
 
@@ -31,11 +30,8 @@ final class Find extends AbstractController
     {
         try {
             $responseStatus = Response::HTTP_OK;
-            $responseContent = FeatureFlagDTOFactory::create(
-                $this->repository->get(
-                    new FeatureFlagId($request->get('featureFlagId'))
-                )
-            );
+            $featureFlagId = new FeatureFlagId($request->get('featureFlagId'));
+            $responseContent = $this->service->find($featureFlagId);
         } catch (Throwable $e) {
             $responseStatus = ResponseCodeValidator::check($e->getCode());
             $responseContent = new ExceptionResponseDTO($e->getMessage());

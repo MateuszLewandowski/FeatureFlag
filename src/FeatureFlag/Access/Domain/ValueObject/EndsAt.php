@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FeatureFlag\Access\Domain\ValueObject;
 
 use DateTimeImmutable;
-use FeatureFlag\Access\Domain\Exception\InvalidEndsAtException;
+use FeatureFlag\Access\Application\Exception\InvalidEndsAtException;
 use JsonSerializable;
 use Shared\Domain\DateTimeSerializable;
 use Shared\ValueObject;

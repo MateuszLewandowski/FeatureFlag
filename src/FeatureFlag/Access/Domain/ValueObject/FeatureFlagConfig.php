@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace FeatureFlag\Access\Domain\ValueObject;
 
-use FeatureFlag\Access\Domain\Collection\UserEmailDomainNameCollection;
-use FeatureFlag\Access\Domain\Collection\UserIdCollection;
-use FeatureFlag\Access\Domain\Collection\UserRoleCollection;
+use FeatureFlag\Access\Application\Collection\UserEmailDomainNameCollection;
+use FeatureFlag\Access\Application\Collection\UserIdCollection;
+use FeatureFlag\Access\Application\Collection\UserRoleCollection;
 use JsonSerializable;
 use Shared\ValueObject;
 
