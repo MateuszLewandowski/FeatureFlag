@@ -31,7 +31,7 @@ use RuntimeException;
  */
 final class FeatureFlagJsonFileRepositoryTest extends TestCase
 {
-    private const PATH = __DIR__ . '/../../../src/test.feature-flags.json';
+    private const PATH = __DIR__ . '/../../../../src/test.feature-flags.json';
 
     public function testTogglesJsonFileExists(): void
     {

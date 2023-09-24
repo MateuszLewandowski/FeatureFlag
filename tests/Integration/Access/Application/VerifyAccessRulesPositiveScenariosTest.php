@@ -35,7 +35,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class VerifyAccessRulesPositiveScenariosTest extends TestCase
 {
-    private const PATH = __DIR__ . '/../../../src/test.feature-flags.json';
+    private const PATH = __DIR__ . '/../../../../src/test.feature-flags.json';
 
     private ReadableRepository $repository;
     private VerifyAccessRules $verifyAccessRules;
